@@ -84,6 +84,17 @@ jobs:
       - name: Compilar APK de prueba
         run: yes | buildozer -v android debug
 
+      # Un paquete de pip con partes compiladas para el computador (x86-64) hace que
+      # la app se cierre al abrir en el teléfono (ARM). Si aparece uno, se detiene aquí.
+      - name: Verificar que las bibliotecas sean para el teléfono (ARM)
+        run: |
+          SP=.buildozer/android/platform/build-arm64-v8a/dists/sanidad/_python_bundle__arm64-v8a/_python_bundle/site-packages
+          find "$SP" -name '*.so' -exec file {} + > /tmp/so.txt
+          grep -c "ARM aarch64" /tmp/so.txt || true
+          if grep -v "ARM aarch64" /tmp/so.txt; then
+            echo "::error::Hay bibliotecas que no son ARM (ver arriba)"; exit 1
+          fi
+
       - name: Guardar caché de SDK/NDK
         if: always()
         uses: actions/cache/save@v4

@@ -19,9 +19,10 @@ version.regex = __version__ = ['"](.*)['"]
 version.filename = %(source.dir)s/sanidad/__init__.py
 
 # Mismas versiones que la app de fenología (PhenoRubus). sqlite3 y openssl tienen
-# receta p4a (base local y HTTPS). requests usa chardet en vez de charset-normalizer,
-# que trae partes compiladas para el computador y no para el teléfono.
-requirements = python3,kivy==2.3.1,kivymd==1.2.0,pillow,requests,urllib3,chardet,idna,certifi,sqlite3,openssl,pyjnius,android
+# receta p4a (base local y HTTPS). requests usa chardet 5.2.0 (Python puro): las
+# versiones 7.x y charset-normalizer traen partes compiladas para computador (x86_64)
+# que no cargan en el teléfono.
+requirements = python3,kivy==2.3.1,kivymd==1.2.0,pillow,requests,urllib3,chardet==5.2.0,idna,certifi,sqlite3,openssl,pyjnius,android
 
 icon.filename = %(source.dir)s/assets/icono.png
 presplash.filename = %(source.dir)s/assets/presplash.png
