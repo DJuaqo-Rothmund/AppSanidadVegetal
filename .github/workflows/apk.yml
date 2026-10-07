@@ -2,11 +2,12 @@ name: Pruebas y APK
 
 on:
   push:
+    paths-ignore: ["README.md", "SPEC.md", "docs/**"]
   workflow_dispatch:
 
 jobs:
   pruebas:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -17,16 +18,16 @@ jobs:
       - name: Pruebas
         run: python -m pytest -q tests
 
+  # Igual que la app de fenología (PhenoRubus), que ya compila así.
   apk:
     needs: pruebas
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -34,21 +35,37 @@ jobs:
 
       - name: Paquetes del sistema para Buildozer
         run: |
-          sudo apt-get update
-          sudo apt-get install -y git zip unzip autoconf automake libtool pkg-config \
-            zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq git zip unzip autoconf libtool pkg-config zlib1g-dev \
+            libncurses-dev cmake libffi-dev libssl-dev automake libltdl-dev build-essential ccache lld
 
       - name: Instalar Buildozer
-        run: pip install "buildozer==1.5.0" "cython==0.29.36" setuptools
+        run: pip install "cython<3.1" buildozer==1.6.0 setuptools
 
-      - name: Caché de Buildozer (SDK, NDK y recetas)
-        uses: actions/cache@v4
+      # Solo se cachea el SDK/NDK (~/.buildozer), no la compilación del proyecto.
+      - name: Restaurar caché de SDK/NDK
+        uses: actions/cache/restore@v4
         with:
-          path: |
-            ~/.buildozer
-            .buildozer
-          key: buildozer-${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
-          restore-keys: buildozer-${{ runner.os }}-
+          path: ~/.buildozer
+          key: buildozer-sdk-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: buildozer-sdk-${{ runner.os }}-
+
+      # freetype se descarga de savannah.gnu.org, que a veces no responde desde GitHub.
+      - name: Fuentes de freetype (con espejos)
+        run: |
+          V=2.14.1; F=freetype-$V.tar.gz
+          D=.buildozer/android/platform/build-arm64-v8a/packages/freetype
+          mkdir -p "$D"
+          for URL in \
+            "https://download-mirror.savannah.gnu.org/releases/freetype/$F" \
+            "https://downloads.sourceforge.net/project/freetype/freetype2/$V/$F" \
+            "https://download.savannah.gnu.org/releases/freetype/$F"; do
+            if curl -fsSL --retry 2 --connect-timeout 20 --max-time 180 -o "$D/$F" "$URL" \
+               && tar -tzf "$D/$F" > /dev/null; then
+              touch "$D/.mark-$F"; echo "freetype desde $URL"; break
+            fi
+            rm -f "$D/$F"
+          done
 
       # Si el repositorio tiene el secreto FIREBASE_CONFIG (contenido de
       # firebase_config.json), se empaqueta en el APK. Sin él, la app abre
@@ -65,7 +82,14 @@ jobs:
           fi
 
       - name: Compilar APK de prueba
-        run: yes | buildozer android debug
+        run: yes | buildozer -v android debug
+
+      - name: Guardar caché de SDK/NDK
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.buildozer
+          key: buildozer-sdk-${{ runner.os }}-${{ github.run_id }}
 
       - uses: actions/upload-artifact@v4
         with:

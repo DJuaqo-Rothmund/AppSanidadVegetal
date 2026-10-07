@@ -18,7 +18,10 @@ source.exclude_patterns = firebase_config.example.json, requirements*.txt, READM
 version.regex = __version__ = ['"](.*)['"]
 version.filename = %(source.dir)s/sanidad/__init__.py
 
-requirements = python3,kivy==2.3.1,kivymd==1.2.0,pillow,requests,urllib3,charset-normalizer,idna,certifi,android
+# Mismas versiones que la app de fenología (PhenoRubus). sqlite3 y openssl tienen
+# receta p4a (base local y HTTPS). requests usa chardet en vez de charset-normalizer,
+# que trae partes compiladas para el computador y no para el teléfono.
+requirements = python3,kivy==2.3.1,kivymd==1.2.0,pillow,requests,urllib3,chardet,idna,certifi,sqlite3,openssl,pyjnius,android
 
 icon.filename = %(source.dir)s/assets/icono.png
 presplash.filename = %(source.dir)s/assets/presplash.png
@@ -33,9 +36,13 @@ android.permissions = INTERNET, ACCESS_NETWORK_STATE, ACCESS_FINE_LOCATION, ACCE
 # Android 8 (API 26) o superior, según SPEC.md
 android.api = 34
 android.minapi = 26
-android.archs = arm64-v8a, armeabi-v7a
+# Solo 64 bits, como la app de fenología (todos los teléfonos Android 8+ actuales)
+android.archs = arm64-v8a
 android.accept_sdk_license = True
-android.allow_backup = True
+android.allow_backup = False
+
+p4a.bootstrap = sdl2
+android.debug_artifact = apk
 
 [buildozer]
 log_level = 2
