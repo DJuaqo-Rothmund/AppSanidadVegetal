@@ -19,8 +19,7 @@ class PantallaMapa(MDScreen):
         self.usuario = app.sesion.sesion.email if app.sesion and app.sesion.activa else ""
         self.ids.mapa.sectores = app.sectores
         if not app.sectores:
-            self.aviso = (f"Falta el archivo de sectores ({SECTORES.name}). "
-                          "El mapa del predio llega en la etapa 2.")
+            self.aviso = f"Falta el archivo de sectores ({SECTORES.name})."
         else:
             self.aviso = ""
         n = len(app.catalogo.organismos)
@@ -30,9 +29,10 @@ class PantallaMapa(MDScreen):
         if sector is None:
             self.ids.tarjeta.opacity = 0
             return
+        variedad = sector.variedad or " / ".join(sector.propiedades.get("variedades_sector") or [])
         partes = [f"Sector {sector.sector}" if sector.sector else sector.id,
                   f"Equipo {sector.equipo}" if sector.equipo else None,
-                  sector.variedad or "variedad sin dato"]
+                  variedad or "variedad sin dato"]
         self.ids.tarjeta_titulo.text = " · ".join(p for p in partes if p)
         self.ids.tarjeta_detalle.text = f"{sector.ha:g} ha" if sector.ha else "superficie sin dato"
         self.ids.tarjeta.opacity = 1

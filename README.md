@@ -7,12 +7,9 @@ Es la app "hermana" de la app de fenología.
 La especificación completa está en [`SPEC.md`](SPEC.md). Este repositorio
 va en la **etapa 1 (Base del proyecto)**.
 
-| Inicio de sesión | Mapa provisorio* |
+| Inicio de sesión | Mapa provisorio |
 |---|---|
-| ![Inicio de sesión](docs/capturas/login.png) | ![Mapa](docs/capturas/mapa-provisorio-datos-sinteticos.png) |
-
-\* La captura del mapa usa polígonos **sintéticos** sacados del boceto, no
-las coordenadas reales del predio.
+| ![Inicio de sesión](docs/capturas/login.png) | ![Mapa](docs/capturas/mapa-provisorio.png) |
 
 ## Estructura
 
@@ -22,7 +19,8 @@ buildozer.spec              Configuración del APK
 firebase_config.example.json  Plantilla de configuración (copiar a firebase_config.json)
 datos/
   catalogo-frambuesa-v1.json  Organismos, protocolos y umbrales
-  sectores-el-amanecer.json   Polígonos del predio (falta agregarlo)
+  sectores-el-amanecer.json   62 polígonos del predio (40 sectores, 196,3 ha)
+scripts/importar_sectores.py  Regenera los polígonos desde el GeoJSON de sectorización
 assets/                     Fuentes (Manrope, Fraunces), ícono y pantalla de carga
 sanidad/
   db/          Base SQLite local (esquema, altas, ediciones, anulaciones)
@@ -33,6 +31,23 @@ sanidad/
   ui/          Interfaz Kivy/KivyMD: tema, pantallas y archivos .kv
 tests/         Pruebas con pytest de todo lo que no es interfaz
 ```
+
+## Sectores del predio
+
+`datos/sectores-el-amanecer.json` se genera desde `el_amanecer.geojson` del
+repositorio PuntoRiesgo (sectorización del plano DWG, 40 sectores). Cada
+parte no contigua de un sector queda como un polígono propio: son 62 en
+total. Cada polígono lleva el `sector_id` de su sector, su superficie
+calculada y la del sector completo:
+
+```bash
+python scripts/importar_sectores.py ../PuntoRiesgo/src/assets/data/el_amanecer.geojson \
+  datos/sectores-el-amanecer.json
+```
+
+Falta la **variedad de cada polígono**. El plano solo trae las variedades del
+Sector 1 · Equipo 1 (Meeker y Cascade Harvest), sin indicar cuál va en cada
+parte.
 
 ## Configurar Firebase
 

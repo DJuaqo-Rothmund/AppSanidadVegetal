@@ -84,3 +84,17 @@ def test_proyeccion_ida_y_vuelta():
     p = Proyeccion((-72.60, -39.10, -72.55, -39.09), ancho=390, alto=600)
     lng, lat = p.a_geo(*p.a_pantalla(-72.575, -39.093))
     assert (lng, lat) == (pytest.approx(-72.575), pytest.approx(-39.093))
+
+
+def test_sectores_empaquetados_de_el_amanecer():
+    from sanidad import rutas
+    from sanidad.geo import cargar_sectores
+
+    sectores = cargar_sectores(rutas.SECTORES)
+    assert len(sectores) == 62  # polígonos (partes no contiguas separadas)
+    assert len({s.propiedades["sector_id"] for s in sectores}) == 40
+    assert {s.equipo for s in sectores} == {"1", "2", "3", "4"}
+    assert sum(s.ha for s in sectores) == pytest.approx(196.3, abs=0.2)
+    min_lng, min_lat, max_lng, max_lat = caja_total(sectores)
+    assert -73 < min_lng < max_lng < -72 and -40 < min_lat < max_lat < -39
+    assert sector_en(sectores, -33.45, -70.66) is None  # Santiago queda fuera del predio
