@@ -24,6 +24,9 @@ from .pantallas.mapa import PantallaMapa
 KV = Path(__file__).parent / "kv"
 
 
+tema.instalar_paleta()  # antes de crear la app, como en PhenoRubus
+
+
 class SanidadApp(MDApp):
     title = "Sanidad · El Amanecer"
     version = __version__
@@ -31,7 +34,6 @@ class SanidadApp(MDApp):
     def build(self):
         if platform not in ("android", "ios"):
             Window.size = (390, 844)
-        tema.registrar_fuentes()
         tema.aplicar_tema(self.theme_cls)
         Window.clearcolor = tema.COLOR["fondo"]
         self.colores = tema.COLOR

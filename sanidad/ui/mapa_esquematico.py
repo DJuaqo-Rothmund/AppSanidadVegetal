@@ -40,7 +40,7 @@ class MapaEsquematico(Widget):
                     anillos = [self._a_pantalla(a) for a in poligono]
                     Color(*COLOR["sector_activo" if activo else "sector_relleno"])
                     self._rellenar(anillos)
-                    Color(*COLOR["primario" if activo else "sector_borde"])
+                    Color(*COLOR["sector_activo_borde" if activo else "sector_borde"])
                     for anillo in anillos:
                         Line(points=anillo, close=True, width=dp(1.4) if activo else dp(0.8))
             for s in self.sectores:
@@ -68,7 +68,7 @@ class MapaEsquematico(Widget):
         xs, ys = [p[0] for p in exterior], [p[1] for p in exterior]
         x0, y0 = self.proyeccion.a_pantalla(min(xs), min(ys))
         x1, y1 = self.proyeccion.a_pantalla(max(xs), max(ys))
-        etiqueta = EtiquetaCore(text=sector.etiqueta, font_size=sp(9), font_name="ManropeExtraBold",
+        etiqueta = EtiquetaCore(text=sector.etiqueta, font_size=sp(9), bold=True,
                                 color=COLOR["sector_texto"])
         etiqueta.refresh()
         textura = etiqueta.texture

@@ -20,13 +20,14 @@
                 MDLabel:
                     text: "SANIDAD · FRAMBUESA"
                     font_style: "Overline"
+                    bold: True
                     theme_text_color: "Custom"
-                    text_color: C["texto_suave"]
+                    text_color: C["hoja"]
 
                 MDLabel:
                     text: "El Amanecer"
-                    font_name: "FrauncesItalic"
-                    font_size: sp(28)
+                    font_style: "H5"
+                    bold: True
                     theme_text_color: "Custom"
                     text_color: C["texto"]
 
@@ -89,12 +90,13 @@
                 MDLabel:
                     text: "SECTOR TOCADO"
                     font_style: "Overline"
+                    bold: True
                     theme_text_color: "Custom"
-                    text_color: C["primario"]
+                    text_color: C["accion"]
                 MDLabel:
                     id: tarjeta_titulo
-                    font_name: "FrauncesItalic"
-                    font_size: sp(19)
+                    font_style: "Subtitle1"
+                    bold: True
                     theme_text_color: "Custom"
                     text_color: C["texto"]
                 MDLabel:
@@ -105,7 +107,7 @@
 
             MDFloatingActionButton:
                 icon: "plus"
-                md_bg_color: C["primario"]
+                md_bg_color: C["accion"]
                 icon_color: C["superficie"]
                 pos_hint: {"right": .96}
                 y: self.parent.y + dp(104)

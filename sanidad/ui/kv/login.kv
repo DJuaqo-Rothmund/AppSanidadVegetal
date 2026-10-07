@@ -14,14 +14,15 @@
         MDLabel:
             text: "SANIDAD · FRAMBUESA"
             font_style: "Overline"
+            bold: True
             theme_text_color: "Custom"
-            text_color: C["texto_suave"]
+            text_color: C["hoja"]
             adaptive_height: True
 
         MDLabel:
             text: "El Amanecer"
-            font_name: "FrauncesItalic"
-            font_size: sp(40)
+            font_style: "H5"
+            bold: True
             theme_text_color: "Custom"
             text_color: C["texto"]
             adaptive_height: True
@@ -44,8 +45,8 @@
             input_type: "mail"
             write_tab: False
             multiline: False
-            line_color_focus: C["primario"]
-            hint_text_color_focus: C["primario"]
+            line_color_focus: C["hoja"]
+            hint_text_color_focus: C["hoja"]
             on_text_validate: contrasena.focus = True
 
         MDTextField:
@@ -55,8 +56,8 @@
             password: True
             write_tab: False
             multiline: False
-            line_color_focus: C["primario"]
-            hint_text_color_focus: C["primario"]
+            line_color_focus: C["hoja"]
+            hint_text_color_focus: C["hoja"]
             on_text_validate: root.entrar()
 
         MDLabel:
@@ -70,18 +71,21 @@
         MDRaisedButton:
             text: "Entrando…" if root.ocupado else "Entrar"
             disabled: root.ocupado
-            md_bg_color: C["primario"]
-            text_color: C["superficie"]
+            md_bg_color: C["accion"]
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1
+            elevation: 0
+            rounded_button: True
             size_hint_x: 1
-            height: dp(52)
-            font_size: sp(16)
+            height: dp(46)
+            font_size: "15sp"
             on_release: root.entrar()
 
         MDSpinner:
             size_hint: None, None
             size: dp(28), dp(28)
             pos_hint: {"center_x": .5}
-            color: C["primario"]
+            color: C["accion"]
             active: root.ocupado
             opacity: 1 if root.ocupado else 0
 

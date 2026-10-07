@@ -10,7 +10,7 @@ package.name = sanidad
 package.domain = cl.elamanecer
 
 source.dir = .
-source.include_exts = py,png,jpg,kv,atlas,ttf,json
+source.include_exts = py,png,jpg,kv,atlas,json
 source.exclude_dirs = tests, bin, docs, .github, .buildozer, venv, .venv, __pycache__
 source.exclude_patterns = firebase_config.example.json, requirements*.txt, README.md, SPEC.md
 
@@ -25,7 +25,7 @@ requirements = python3,kivy==2.3.1,kivymd==1.2.0,pillow,requests,urllib3,chardet
 
 icon.filename = %(source.dir)s/assets/icono.png
 presplash.filename = %(source.dir)s/assets/presplash.png
-android.presplash_color = #EEF1EA
+android.presplash_color = #F2F4EE
 
 orientation = portrait
 fullscreen = 0
