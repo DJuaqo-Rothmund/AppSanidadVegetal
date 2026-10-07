@@ -3,15 +3,18 @@
 Separa cada sector en sus partes no contiguas (un polígono por parte, 62 en
 El Amanecer) y normaliza las propiedades al modelo de SPEC.md.
 
+Los sectores sin variedad en el plano reciben la variedad por defecto
+(en El Amanecer, todos salvo el Sector 1 · Equipo 1 son Wakefield).
+
 Uso:
-    python scripts/importar_sectores.py origen.geojson datos/sectores-el-amanecer.json
+    python scripts/importar_sectores.py origen.geojson datos/sectores-el-amanecer.json \
+        [--variedad-por-defecto Wakefield]
 """
 
 import json
 import math
 import re
 import string
-import sys
 
 RADIO_TIERRA_M = 6371008.8
 
@@ -30,13 +33,15 @@ def numero(texto):
     return m.group(0) if m else None
 
 
-def convertir(origen):
+def convertir(origen, variedad_por_defecto=None):
     salida = []
     for f in origen["features"]:
         p = f["properties"]
         g = f["geometry"]
         partes = [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"]
         variedades = [v.strip() for v in (p.get("variedades") or "").split(",") if v.strip()]
+        if not variedades and variedad_por_defecto:
+            variedades = [variedad_por_defecto]
         areas = [area_ha(parte[0]) - sum(area_ha(h) for h in parte[1:]) for parte in partes]
         for i, (parte, area) in enumerate(zip(partes, areas)):
             sufijo = string.ascii_lowercase[i] if len(partes) > 1 else ""
@@ -70,9 +75,16 @@ def convertir(origen):
 
 
 if __name__ == "__main__":
-    with open(sys.argv[1], encoding="utf-8") as f:
-        resultado = convertir(json.load(f))
-    with open(sys.argv[2], "w", encoding="utf-8") as f:
+    import argparse
+
+    args = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    args.add_argument("origen")
+    args.add_argument("destino")
+    args.add_argument("--variedad-por-defecto", default=None)
+    a = args.parse_args()
+    with open(a.origen, encoding="utf-8") as f:
+        resultado = convertir(json.load(f), a.variedad_por_defecto)
+    with open(a.destino, "w", encoding="utf-8") as f:
         json.dump(resultado, f, ensure_ascii=False, indent=1)
         f.write("\n")
-    print(f"{len(resultado['features'])} polígonos escritos en {sys.argv[2]}")
+    print(f"{len(resultado['features'])} polígonos escritos en {a.destino}")

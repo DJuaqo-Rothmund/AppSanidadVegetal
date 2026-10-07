@@ -2,7 +2,8 @@
 
 App Android para monitorear enfermedades, plagas y malezas en frambuesa.
 Está escrita en Python con Kivy + KivyMD y se compila con Buildozer.
-Es la app "hermana" de la app de fenología.
+Es la app "hermana" de la app de fenología (PhenoRubus): usa su misma
+paleta, tipografía y forma de compilar.
 
 La especificación completa está en [`SPEC.md`](SPEC.md). Este repositorio
 va en la **etapa 1 (Base del proyecto)**.
@@ -21,7 +22,7 @@ datos/
   catalogo-frambuesa-v1.json  Organismos, protocolos y umbrales
   sectores-el-amanecer.json   62 polígonos del predio (40 sectores, 196,3 ha)
 scripts/importar_sectores.py  Regenera los polígonos desde el GeoJSON de sectorización
-assets/                     Fuentes (Manrope, Fraunces), ícono y pantalla de carga
+assets/                     Ícono y pantalla de carga
 sanidad/
   db/          Base SQLite local (esquema, altas, ediciones, anulaciones)
   firebase/    Cliente REST: Authentication y Firestore
@@ -40,14 +41,15 @@ parte no contigua de un sector queda como un polígono propio: son 62 en
 total. Cada polígono lleva el `sector_id` de su sector, su superficie
 calculada y la del sector completo:
 
+Variedades: todos los sectores son **Wakefield**, salvo el Sector 1 · Equipo 1,
+que tiene **Meeker y Cascade Harvest**. Falta saber cuál de las dos va en cada
+una de sus 4 partes; mientras tanto, esas partes quedan con la variedad en
+blanco y la lista del sector en `variedades_sector`.
+
 ```bash
 python scripts/importar_sectores.py ../PuntoRiesgo/src/assets/data/el_amanecer.geojson \
-  datos/sectores-el-amanecer.json
+  datos/sectores-el-amanecer.json --variedad-por-defecto Wakefield
 ```
-
-Falta la **variedad de cada polígono**. El plano solo trae las variedades del
-Sector 1 · Equipo 1 (Meeker y Cascade Harvest), sin indicar cuál va en cada
-parte.
 
 ## Configurar Firebase
 

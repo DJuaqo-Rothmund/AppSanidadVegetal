@@ -98,3 +98,16 @@ def test_sectores_empaquetados_de_el_amanecer():
     min_lng, min_lat, max_lng, max_lat = caja_total(sectores)
     assert -73 < min_lng < max_lng < -72 and -40 < min_lat < max_lat < -39
     assert sector_en(sectores, -33.45, -70.66) is None  # Santiago queda fuera del predio
+
+
+def test_variedades_de_el_amanecer():
+    from collections import Counter
+
+    from sanidad import rutas
+    from sanidad.geo import cargar_sectores
+
+    sectores = cargar_sectores(rutas.SECTORES)
+    assert Counter(s.variedad for s in sectores) == {"Wakefield": 58, None: 4}
+    s1e1 = [s for s in sectores if s.propiedades["sector_id"] == "E1-S1"]
+    assert len(s1e1) == 4 and all(s.variedad is None for s in s1e1)
+    assert all(s.propiedades["variedades_sector"] == ["Meeker", "Cascade Harvest"] for s in s1e1)
