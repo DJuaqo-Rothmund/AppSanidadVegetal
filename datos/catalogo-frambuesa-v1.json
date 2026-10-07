@@ -1,0 +1,765 @@
+{
+  "id": "frambuesa-v1",
+  "cultivo": "frambuesa",
+  "version": 1,
+  "fecha": "2026-10-07",
+  "origen": "Tabla 'Catálogo v1' de SPEC.md. Umbrales de referencia, para ajustar con datos propios.",
+  "dias_sin_visita": 14,
+  "reglas_especiales": {
+    "semillacion_sobre_umbral": "En malezas, el estado 'semillación' fuerza sobre umbral aunque la cobertura sea baja.",
+    "cualquier_cobertura_sobre_umbral": "Cualquier cobertura registrada deja la maleza sobre umbral.",
+    "larva_en_fruta_sobre_umbral": "Cualquier larva en fruta deja el punto sobre umbral."
+  },
+  "pendientes": [
+    "Faltan 9 de las 10 especies de malezas: SPEC.md solo nombra la zarzamora."
+  ],
+  "organismos": [
+    {
+      "id": "botrytis",
+      "nombre": "Pudrición gris",
+      "cientifico": "Botrytis cinerea",
+      "metodo": "100 flores o frutos por punto",
+      "campos": [
+        {
+          "id": "n_evaluados",
+          "etiqueta": "Flores o frutos evaluados",
+          "tipo": "entero",
+          "min": 1,
+          "defecto": 100
+        },
+        {
+          "id": "n_con_sintoma",
+          "etiqueta": "Flores o frutos con síntoma",
+          "tipo": "entero",
+          "min": 0
+        }
+      ],
+      "indicadores": [
+        {
+          "id": "incidencia",
+          "nombre": "Incidencia",
+          "tipo": "porcentaje",
+          "numerador": "n_con_sintoma",
+          "denominador": "n_evaluados",
+          "unidad": "%"
+        }
+      ],
+      "umbral": {
+        "cerca": {
+          "medida": "incidencia",
+          "valor": 3
+        },
+        "sobre": {
+          "medida": "incidencia",
+          "valor": 5
+        }
+      },
+      "estados": [
+        "sin síntoma",
+        "lesión",
+        "esporulando",
+        "momificado"
+      ],
+      "ventana_bbch": {
+        "desde": 57,
+        "hasta": 89
+      },
+      "fuente_umbral": "propuesta propia para el piloto, sin fuente local",
+      "grupo": "enfermedad",
+      "tipo_punto": "fijo",
+      "activo": true
+    },
+    {
+      "id": "phytophthora",
+      "nombre": "Pudrición de raíces",
+      "cientifico": "Phytophthora spp.",
+      "metodo": "20 plantas seguidas en la hilera",
+      "campos": [
+        {
+          "id": "n_plantas",
+          "etiqueta": "Plantas evaluadas",
+          "tipo": "entero",
+          "min": 1,
+          "defecto": 20
+        },
+        {
+          "id": "n_sintomaticas",
+          "etiqueta": "Plantas sintomáticas",
+          "tipo": "entero",
+          "min": 0
+        },
+        {
+          "id": "vigor",
+          "etiqueta": "Vigor (0–4)",
+          "tipo": "escala",
+          "min": 0,
+          "max": 4
+        }
+      ],
+      "indicadores": [
+        {
+          "id": "pct_sintomaticas",
+          "nombre": "Plantas sintomáticas",
+          "tipo": "porcentaje",
+          "numerador": "n_sintomaticas",
+          "denominador": "n_plantas",
+          "unidad": "%"
+        },
+        {
+          "id": "vigor",
+          "nombre": "Vigor",
+          "tipo": "campo",
+          "campo": "vigor",
+          "unidad": "0–4"
+        }
+      ],
+      "umbral": {
+        "cerca": {
+          "medida": "n_sintomaticas",
+          "valor": 1
+        },
+        "sobre": {
+          "medida": "pct_sintomaticas",
+          "valor": 5
+        }
+      },
+      "estados": [
+        "decaimiento",
+        "marchitez",
+        "muerta"
+      ],
+      "ventana_bbch": null,
+      "fuente_umbral": "propuesta propia para el piloto, sin fuente local",
+      "grupo": "enfermedad",
+      "tipo_punto": "fijo",
+      "activo": true
+    },
+    {
+      "id": "agalla_cuello",
+      "nombre": "Agalla del cuello",
+      "cientifico": "Agrobacterium tumefaciens",
+      "metodo": "20 plantas, revisión de base y corona",
+      "campos": [
+        {
+          "id": "n_plantas",
+          "etiqueta": "Plantas evaluadas",
+          "tipo": "entero",
+          "min": 1,
+          "defecto": 20
+        },
+        {
+          "id": "n_con_agalla",
+          "etiqueta": "Plantas con agalla",
+          "tipo": "entero",
+          "min": 0
+        }
+      ],
+      "indicadores": [
+        {
+          "id": "pct_con_agalla",
+          "nombre": "Plantas con agalla",
+          "tipo": "porcentaje",
+          "numerador": "n_con_agalla",
+          "denominador": "n_plantas",
+          "unidad": "%"
+        }
+      ],
+      "umbral": {
+        "cerca": {
+          "medida": "n_con_agalla",
+          "valor": 1
+        },
+        "sobre": {
+          "medida": "pct_con_agalla",
+          "valor": 5
+        }
+      },
+      "estados": [
+        "agalla joven",
+        "agalla leñosa"
+      ],
+      "ventana_bbch": null,
+      "fuente_umbral": "propuesta propia para el piloto, sin fuente local",
+      "grupo": "enfermedad",
+      "tipo_punto": "fijo",
+      "activo": true
+    },
+    {
+      "id": "tizon_cana",
+      "nombre": "Tizón de la caña",
+      "cientifico": "Leptosphaeria / Didymella",
+      "metodo": "20 cañas",
+      "campos": [
+        {
+          "id": "n_canas",
+          "etiqueta": "Cañas evaluadas",
+          "tipo": "entero",
+          "min": 1,
+          "defecto": 20
+        },
+        {
+          "id": "n_con_lesion",
+          "etiqueta": "Cañas con lesión",
+          "tipo": "entero",
+          "min": 0
+        }
+      ],
+      "indicadores": [
+        {
+          "id": "pct_con_lesion",
+          "nombre": "Cañas con lesión",
+          "tipo": "porcentaje",
+          "numerador": "n_con_lesion",
+          "denominador": "n_canas",
+          "unidad": "%"
+        }
+      ],
+      "umbral": {
+        "cerca": {
+          "medida": "pct_con_lesion",
+          "valor": 5
+        },
+        "sobre": {
+          "medida": "pct_con_lesion",
+          "valor": 10
+        }
+      },
+      "estados": [
+        "lesión inicial",
+        "anillamiento parcial",
+        "anillamiento total"
+      ],
+      "ventana_bbch": null,
+      "fuente_umbral": "propuesta propia para el piloto, sin fuente local",
+      "grupo": "enfermedad",
+      "tipo_punto": "fijo",
+      "activo": true
+    },
+    {
+      "id": "roya",
+      "nombre": "Roya",
+      "cientifico": "Pucciniastrum americanum",
+      "metodo": "50 hojas",
+      "campos": [
+        {
+          "id": "n_hojas",
+          "etiqueta": "Hojas evaluadas",
+          "tipo": "entero",
+          "min": 1,
+          "defecto": 50
+        },
+        {
+          "id": "n_con_pustulas",
+          "etiqueta": "Hojas con pústulas",
+          "tipo": "entero",
+          "min": 0
+        },
+        {
+          "id": "severidad",
+          "etiqueta": "Severidad (0–5)",
+          "tipo": "escala",
+          "min": 0,
+          "max": 5
+        }
+      ],
+      "indicadores": [
+        {
+          "id": "pct_con_pustulas",
+          "nombre": "Hojas con pústulas",
+          "tipo": "porcentaje",
+          "numerador": "n_con_pustulas",
+          "denominador": "n_hojas",
+          "unidad": "%"
+        },
+        {
+          "id": "severidad",
+          "nombre": "Severidad",
+          "tipo": "campo",
+          "campo": "severidad",
+          "unidad": "0–5"
+        }
+      ],
+      "umbral": {
+        "cerca": {
+          "medida": "pct_con_pustulas",
+          "valor": 5
+        },
+        "sobre": {
+          "medida": "pct_con_pustulas",
+          "valor": 10
+        }
+      },
+      "estados": [
+        "uredo (anaranjado, activo)",
+        "telio (oscuro, resistencia)"
+      ],
+      "ventana_bbch": {
+        "desde": 31,
+        "hasta": 95
+      },
+      "fuente_umbral": "propuesta propia para el piloto, sin fuente local",
+      "grupo": "enfermedad",
+      "tipo_punto": "fijo",
+      "activo": true
+    },
+    {
+      "id": "drosophila_suzukii",
+      "nombre": "Mosca de alas manchadas",
+      "cientifico": "Drosophila suzukii",
+      "metodo": "Trampa semanal (vinagre + levadura) y 30 frutos desde pinta",
+      "tipo_punto": "trampa",
+      "campos": [
+        {
+          "id": "capturas",
+          "etiqueta": "Capturas en la trampa",
+          "tipo": "entero",
+          "min": 0
+        },
+        {
+          "id": "n_frutos",
+          "etiqueta": "Frutos evaluados",
+          "tipo": "entero",
+          "min": 0,
+          "defecto": 30
+        },
+        {
+          "id": "n_frutos_con_larva",
+          "etiqueta": "Frutos con larva",
+          "tipo": "entero",
+          "min": 0
+        }
+      ],
+      "indicadores": [
+        {
+          "id": "capturas",
+          "nombre": "Capturas por trampa",
+          "tipo": "campo",
+          "campo": "capturas",
+          "unidad": "capturas"
+        },
+        {
+          "id": "pct_frutos_con_larva",
+          "nombre": "Frutos con larva",
+          "tipo": "porcentaje",
+          "numerador": "n_frutos_con_larva",
+          "denominador": "n_frutos",
+          "unidad": "%",
+          "ventana_bbch": {
+            "desde": 81,
+            "hasta": null
+          }
+        }
+      ],
+      "umbrales": [
+        {
+          "indicador": "capturas",
+          "cerca": {
+            "medida": "capturas",
+            "valor": 1
+          },
+          "sobre": {
+            "medida": "capturas",
+            "valor": 5
+          }
+        },
+        {
+          "indicador": "pct_frutos_con_larva",
+          "cerca": null,
+          "sobre": {
+            "medida": "n_frutos_con_larva",
+            "valor": 1
+          }
+        }
+      ],
+      "estados": [
+        "huevo",
+        "larva",
+        "pupa",
+        "adulto"
+      ],
+      "ventana_bbch": null,
+      "reglas_especiales": [
+        "larva_en_fruta_sobre_umbral"
+      ],
+      "fuente_umbral": "SAG; Frutas de Chile; U. de Valladolid (ver SPEC.md, Fuentes)",
+      "grupo": "plaga",
+      "activo": true
+    },
+    {
+      "id": "cabrito",
+      "nombre": "Cabrito",
+      "cientifico": "Aegorhinus superciliosus",
+      "metodo": "Golpeteo de 10 plantas + revisión de cuello",
+      "campos": [
+        {
+          "id": "n_plantas",
+          "etiqueta": "Plantas golpeadas",
+          "tipo": "entero",
+          "min": 1,
+          "defecto": 10
+        },
+        {
+          "id": "adultos",
+          "etiqueta": "Adultos encontrados",
+          "tipo": "entero",
+          "min": 0
+        },
+        {
+          "id": "n_con_dano",
+          "etiqueta": "Plantas con daño en el cuello",
+          "tipo": "entero",
+          "min": 0
+        },
+        {
+          "id": "ubicacion",
+          "etiqueta": "Ubicación",
+          "tipo": "opcion",
+          "opciones": [
+            "borde",
+            "interior"
+          ]
+        }
+      ],
+      "indicadores": [
+        {
+          "id": "adultos_10pl",
+          "nombre": "Adultos por 10 plantas",
+          "tipo": "por_n",
+          "numerador": "adultos",
+          "denominador": "n_plantas",
+          "por": 10,
+          "unidad": "adultos/10 pl"
+        },
+        {
+          "id": "pct_con_dano",
+          "nombre": "Plantas con daño",
+          "tipo": "porcentaje",
+          "numerador": "n_con_dano",
+          "denominador": "n_plantas",
+          "unidad": "%"
+        }
+      ],
+      "umbral": {
+        "cerca": {
+          "medida": "adultos_10pl",
+          "valor": 1
+        },
+        "sobre": {
+          "medida": "adultos_10pl",
+          "valor": 3
+        }
+      },
+      "estados": [
+        "larva",
+        "adulto"
+      ],
+      "ventana_bbch": null,
+      "fuente_umbral": "propuesta propia para el piloto, sin fuente local",
+      "grupo": "plaga",
+      "tipo_punto": "fijo",
+      "activo": true
+    },
+    {
+      "id": "burrito",
+      "nombre": "Burrito",
+      "cientifico": "Otiorhynchus rugosostriatus",
+      "metodo": "Golpeteo de 10 plantas + revisión de cuello; revisión nocturna o en refugio",
+      "campos": [
+        {
+          "id": "n_plantas",
+          "etiqueta": "Plantas golpeadas",
+          "tipo": "entero",
+          "min": 1,
+          "defecto": 10
+        },
+        {
+          "id": "adultos",
+          "etiqueta": "Adultos encontrados",
+          "tipo": "entero",
+          "min": 0
+        },
+        {
+          "id": "n_con_dano",
+          "etiqueta": "Plantas con daño en el cuello",
+          "tipo": "entero",
+          "min": 0
+        }
+      ],
+      "indicadores": [
+        {
+          "id": "adultos_10pl",
+          "nombre": "Adultos por 10 plantas",
+          "tipo": "por_n",
+          "numerador": "adultos",
+          "denominador": "n_plantas",
+          "por": 10,
+          "unidad": "adultos/10 pl"
+        },
+        {
+          "id": "pct_con_dano",
+          "nombre": "Plantas con daño",
+          "tipo": "porcentaje",
+          "numerador": "n_con_dano",
+          "denominador": "n_plantas",
+          "unidad": "%"
+        }
+      ],
+      "umbral": {
+        "cerca": {
+          "medida": "adultos_10pl",
+          "valor": 1
+        },
+        "sobre": {
+          "medida": "adultos_10pl",
+          "valor": 3
+        }
+      },
+      "estados": [
+        "larva",
+        "adulto"
+      ],
+      "ventana_bbch": null,
+      "fuente_umbral": "propuesta propia para el piloto, sin fuente local",
+      "grupo": "plaga",
+      "tipo_punto": "fijo",
+      "activo": true
+    },
+    {
+      "id": "aranita_bimanchada",
+      "nombre": "Arañita bimanchada",
+      "cientifico": "Tetranychus urticae",
+      "metodo": "25 foliolos del tercio medio, lupa 10×",
+      "campos": [
+        {
+          "id": "n_foliolos",
+          "etiqueta": "Foliolos evaluados",
+          "tipo": "entero",
+          "min": 1,
+          "defecto": 25
+        },
+        {
+          "id": "n_con_moviles",
+          "etiqueta": "Foliolos con formas móviles",
+          "tipo": "entero",
+          "min": 0
+        },
+        {
+          "id": "moviles",
+          "etiqueta": "Formas móviles contadas",
+          "tipo": "entero",
+          "min": 0
+        },
+        {
+          "id": "depredadores",
+          "etiqueta": "Depredadores presentes",
+          "tipo": "bool"
+        }
+      ],
+      "indicadores": [
+        {
+          "id": "pct_con_moviles",
+          "nombre": "Foliolos con móviles",
+          "tipo": "porcentaje",
+          "numerador": "n_con_moviles",
+          "denominador": "n_foliolos",
+          "unidad": "%"
+        },
+        {
+          "id": "moviles_foliolo",
+          "nombre": "Móviles por foliolo",
+          "tipo": "por_n",
+          "numerador": "moviles",
+          "denominador": "n_foliolos",
+          "por": 1,
+          "unidad": "móviles/foliolo"
+        }
+      ],
+      "umbral": {
+        "cerca": {
+          "medida": "pct_con_moviles",
+          "valor": 7
+        },
+        "sobre": {
+          "medida": "pct_con_moviles",
+          "valor": 10
+        }
+      },
+      "estados": [
+        "huevo",
+        "ninfa",
+        "adulto"
+      ],
+      "ventana_bbch": {
+        "desde": 31,
+        "hasta": 95
+      },
+      "fuente_umbral": "NC State Extension; IOBC-WPRS (ver SPEC.md, Fuentes)",
+      "grupo": "plaga",
+      "tipo_punto": "fijo",
+      "activo": true
+    },
+    {
+      "id": "enrollador",
+      "nombre": "Enrollador",
+      "cientifico": "Proeulia spp.",
+      "metodo": "Trampa de feromona semanal + 25 brotes o racimos",
+      "tipo_punto": "trampa",
+      "campos": [
+        {
+          "id": "machos",
+          "etiqueta": "Machos en la trampa",
+          "tipo": "entero",
+          "min": 0
+        },
+        {
+          "id": "n_brotes",
+          "etiqueta": "Brotes o racimos evaluados",
+          "tipo": "entero",
+          "min": 0,
+          "defecto": 25
+        },
+        {
+          "id": "n_brotes_con_larva",
+          "etiqueta": "Brotes o racimos con larva",
+          "tipo": "entero",
+          "min": 0
+        },
+        {
+          "id": "biofix",
+          "etiqueta": "Biofix (primera captura sostenida)",
+          "tipo": "fecha"
+        }
+      ],
+      "indicadores": [
+        {
+          "id": "machos",
+          "nombre": "Machos por trampa",
+          "tipo": "campo",
+          "campo": "machos",
+          "unidad": "machos"
+        },
+        {
+          "id": "pct_brotes_con_larva",
+          "nombre": "Brotes con larva",
+          "tipo": "porcentaje",
+          "numerador": "n_brotes_con_larva",
+          "denominador": "n_brotes",
+          "unidad": "%"
+        }
+      ],
+      "umbrales": [
+        {
+          "indicador": "machos",
+          "cerca": {
+            "medida": "machos",
+            "valor": 5
+          },
+          "sobre": {
+            "medida": "machos",
+            "valor": 10
+          }
+        },
+        {
+          "indicador": "pct_brotes_con_larva",
+          "cerca": null,
+          "sobre": {
+            "medida": "pct_brotes_con_larva",
+            "valor": 2
+          }
+        }
+      ],
+      "estados": [
+        "huevo",
+        "larva",
+        "pupa",
+        "adulto"
+      ],
+      "ventana_bbch": {
+        "desde": 31,
+        "hasta": 89
+      },
+      "fuente_umbral": "propuesta propia para el piloto, sin fuente local",
+      "grupo": "plaga",
+      "activo": true
+    },
+    {
+      "id": "zarzamora",
+      "nombre": "Zarzamora",
+      "cientifico": "Rubus ulmifolius",
+      "metodo": "Cuadrante de 0,25 m² en hilera y entrehilera",
+      "campos": [
+        {
+          "id": "posicion",
+          "etiqueta": "Posición",
+          "tipo": "opcion",
+          "opciones": [
+            "hilera",
+            "entrehilera"
+          ]
+        },
+        {
+          "id": "clase_cobertura",
+          "etiqueta": "Cobertura",
+          "tipo": "clase",
+          "clases": [
+            {
+              "valor": 0,
+              "etiqueta": "<5%"
+            },
+            {
+              "valor": 1,
+              "etiqueta": "5–25%"
+            },
+            {
+              "valor": 2,
+              "etiqueta": "25–50%"
+            },
+            {
+              "valor": 3,
+              "etiqueta": "50–75%"
+            },
+            {
+              "valor": 4,
+              "etiqueta": ">75%"
+            }
+          ]
+        }
+      ],
+      "indicadores": [
+        {
+          "id": "clase_cobertura",
+          "nombre": "Clase de cobertura",
+          "tipo": "campo",
+          "campo": "clase_cobertura",
+          "unidad": "clase"
+        }
+      ],
+      "umbral": {
+        "cerca": {
+          "medida": "clase_cobertura",
+          "valor": 1
+        },
+        "sobre": {
+          "medida": "clase_cobertura",
+          "valor": 2
+        }
+      },
+      "estados": [
+        "plántula",
+        "vegetativa",
+        "floración",
+        "semillación"
+      ],
+      "ventana_bbch": null,
+      "fuente_umbral": "propuesta propia para el piloto, sin fuente local",
+      "reglas_especiales": [
+        "semillacion_sobre_umbral",
+        "cualquier_cobertura_sobre_umbral"
+      ],
+      "nota": "Hospedera de D. suzukii en Chile: cualquier cobertura queda sobre umbral.",
+      "grupo": "maleza",
+      "tipo_punto": "fijo",
+      "activo": true
+    }
+  ]
+}
