@@ -1,0 +1,121 @@
+#:import C sanidad.ui.tema.COLOR
+
+<PantallaMapa>:
+    md_bg_color: C["fondo"]
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # Encabezado como en el boceto
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(84)
+            padding: dp(18), dp(12), dp(10), dp(8)
+            spacing: dp(8)
+
+            MDBoxLayout:
+                orientation: "vertical"
+                spacing: dp(2)
+
+                MDLabel:
+                    text: "SANIDAD · FRAMBUESA"
+                    font_style: "Overline"
+                    theme_text_color: "Custom"
+                    text_color: C["texto_suave"]
+
+                MDLabel:
+                    text: "El Amanecer"
+                    font_name: "FrauncesItalic"
+                    font_size: sp(28)
+                    theme_text_color: "Custom"
+                    text_color: C["texto"]
+
+            MDIconButton:
+                icon: "logout"
+                theme_icon_color: "Custom"
+                icon_color: C["texto"]
+                pos_hint: {"center_y": .5}
+                on_release: root.cerrar_sesion()
+
+        MDLabel:
+            text: root.usuario
+            font_style: "Caption"
+            theme_text_color: "Custom"
+            text_color: C["texto_suave"]
+            padding: dp(18), 0
+            size_hint_y: None
+            height: dp(18)
+
+        FloatLayout:
+            canvas.before:
+                Color:
+                    rgba: C["mapa_fondo"]
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MapaEsquematico:
+                id: mapa
+                pos: self.parent.pos
+                size: self.parent.size
+                on_seleccionado: root.on_sector(self.seleccionado)
+
+            MDLabel:
+                text: root.aviso
+                halign: "center"
+                font_style: "Body1"
+                theme_text_color: "Custom"
+                text_color: C["texto_suave"]
+                size_hint: .85, None
+                height: self.texture_size[1]
+                pos_hint: {"center_x": .5, "center_y": .55}
+                opacity: 1 if root.aviso else 0
+
+            MDCard:
+                id: tarjeta
+                orientation: "vertical"
+                size_hint: None, None
+                width: self.parent.width - dp(24)
+                height: dp(78)
+                x: self.parent.x + dp(12)
+                y: self.parent.y + dp(12)
+                padding: dp(16), dp(12)
+                radius: [dp(20)]
+                md_bg_color: C["superficie"]
+                line_color: C["borde_suave"]
+                elevation: 1
+                opacity: 0
+
+                MDLabel:
+                    text: "SECTOR TOCADO"
+                    font_style: "Overline"
+                    theme_text_color: "Custom"
+                    text_color: C["primario"]
+                MDLabel:
+                    id: tarjeta_titulo
+                    font_name: "FrauncesItalic"
+                    font_size: sp(19)
+                    theme_text_color: "Custom"
+                    text_color: C["texto"]
+                MDLabel:
+                    id: tarjeta_detalle
+                    font_style: "Body2"
+                    theme_text_color: "Custom"
+                    text_color: C["texto_suave"]
+
+            MDFloatingActionButton:
+                icon: "plus"
+                md_bg_color: C["primario"]
+                icon_color: C["superficie"]
+                pos_hint: {"right": .96}
+                y: self.parent.y + dp(104)
+                on_release: root.nueva_observacion()
+
+        MDLabel:
+            text: root.detalle
+            font_style: "Caption"
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: C["texto_suave"]
+            size_hint_y: None
+            height: dp(28)

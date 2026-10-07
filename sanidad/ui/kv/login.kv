@@ -1,0 +1,96 @@
+#:import C sanidad.ui.tema.COLOR
+
+<PantallaLogin>:
+    md_bg_color: C["fondo"]
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: dp(24), dp(48), dp(24), dp(24)
+        spacing: dp(14)
+
+        Widget:
+            size_hint_y: 0.35
+
+        MDLabel:
+            text: "SANIDAD · FRAMBUESA"
+            font_style: "Overline"
+            theme_text_color: "Custom"
+            text_color: C["texto_suave"]
+            adaptive_height: True
+
+        MDLabel:
+            text: "El Amanecer"
+            font_name: "FrauncesItalic"
+            font_size: sp(40)
+            theme_text_color: "Custom"
+            text_color: C["texto"]
+            adaptive_height: True
+
+        MDLabel:
+            text: "Monitoreo de enfermedades, plagas y malezas. Entra con la cuenta que te dio el administrador."
+            font_style: "Body2"
+            theme_text_color: "Custom"
+            text_color: C["texto_suave"]
+            adaptive_height: True
+
+        Widget:
+            size_hint_y: None
+            height: dp(8)
+
+        MDTextField:
+            id: email
+            hint_text: "Correo"
+            mode: "rectangle"
+            input_type: "mail"
+            write_tab: False
+            multiline: False
+            line_color_focus: C["primario"]
+            hint_text_color_focus: C["primario"]
+            on_text_validate: contrasena.focus = True
+
+        MDTextField:
+            id: contrasena
+            hint_text: "Contraseña"
+            mode: "rectangle"
+            password: True
+            write_tab: False
+            multiline: False
+            line_color_focus: C["primario"]
+            hint_text_color_focus: C["primario"]
+            on_text_validate: root.entrar()
+
+        MDLabel:
+            text: root.error
+            font_style: "Body2"
+            theme_text_color: "Custom"
+            text_color: C["sobre"]
+            adaptive_height: True
+            opacity: 1 if root.error else 0
+
+        MDRaisedButton:
+            text: "Entrando…" if root.ocupado else "Entrar"
+            disabled: root.ocupado
+            md_bg_color: C["primario"]
+            text_color: C["superficie"]
+            size_hint_x: 1
+            height: dp(52)
+            font_size: sp(16)
+            on_release: root.entrar()
+
+        MDSpinner:
+            size_hint: None, None
+            size: dp(28), dp(28)
+            pos_hint: {"center_x": .5}
+            color: C["primario"]
+            active: root.ocupado
+            opacity: 1 if root.ocupado else 0
+
+        Widget:
+
+        MDLabel:
+            text: "v" + app.version
+            font_style: "Caption"
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: C["texto_suave"]
+            adaptive_height: True
