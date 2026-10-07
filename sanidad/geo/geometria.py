@@ -132,3 +132,7 @@ class Proyeccion:
     def a_pantalla(self, lng, lat):
         return (self.dx + (lng * self.k - self.x0) * self.escala,
                 self.dy + (lat - self.y0) * self.escala)
+
+    def a_geo(self, x, y):
+        """Inversa de a_pantalla: de píxeles a (lng, lat)."""
+        return ((x - self.dx) / self.escala + self.x0) / self.k, (y - self.dy) / self.escala + self.y0

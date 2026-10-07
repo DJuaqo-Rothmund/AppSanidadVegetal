@@ -78,3 +78,9 @@ def test_proyeccion_conserva_proporcion_y_orientacion():
     assert x1 - x0 == pytest.approx(400)  # el lado largo llena el ancho
     # 0,05° de longitud a -39° miden ~3,9 veces 0,01° de latitud
     assert (x1 - x0) / (y1 - y0) == pytest.approx(5 * 0.7765, rel=1e-3)
+
+
+def test_proyeccion_ida_y_vuelta():
+    p = Proyeccion((-72.60, -39.10, -72.55, -39.09), ancho=390, alto=600)
+    lng, lat = p.a_geo(*p.a_pantalla(-72.575, -39.093))
+    assert (lng, lat) == (pytest.approx(-72.575), pytest.approx(-39.093))
