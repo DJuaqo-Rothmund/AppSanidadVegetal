@@ -1,0 +1,18 @@
+# Configuración con credenciales: nunca al repositorio
+firebase_config.json
+*.keystore
+*.jks
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Buildozer
+.buildozer/
+bin/
+
+# Datos locales de la app en el escritorio
+*.sqlite3

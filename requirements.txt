@@ -1,0 +1,5 @@
+# Dependencias de la app (las mismas que buildozer.spec empaqueta)
+kivy==2.3.1
+kivymd==1.2.0
+requests
+certifi
