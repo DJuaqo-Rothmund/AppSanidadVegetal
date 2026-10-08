@@ -120,7 +120,7 @@ def distancia_a_borde_m(lng, lat, poligono):
     return mejor
 
 
-@dataclass
+@dataclass(eq=False)  # cada lectura es un evento nuevo, aunque repita la coordenada
 class Ubicacion:
     """Resultado de ubicar una coordenada en el predio."""
     lat: float

@@ -1,17 +1,24 @@
 #:import C sanidad.ui.tema.COLOR
 
+<BotonMapa@MDIconButton>:
+    theme_icon_color: "Custom"
+    icon_color: C["primario"]
+    md_bg_color: 1, 1, 1, .94
+    size_hint: None, None
+    size: dp(44), dp(44)
+
 <PantallaMapa>:
     md_bg_color: C["fondo"]
 
     MDBoxLayout:
         orientation: "vertical"
 
-        # Encabezado como en el boceto
+        # Encabezado
         MDBoxLayout:
             size_hint_y: None
             height: dp(84)
             padding: dp(18), dp(12), dp(10), dp(8)
-            spacing: dp(8)
+            spacing: dp(4)
 
             MDBoxLayout:
                 orientation: "vertical"
@@ -32,6 +39,13 @@
                     text_color: C["texto"]
 
             MDIconButton:
+                icon: "map-outline" if root.satelital else "satellite-variant"
+                theme_icon_color: "Custom"
+                icon_color: C["texto"]
+                pos_hint: {"center_y": .5}
+                on_release: root.cambiar_modo()
+
+            MDIconButton:
                 icon: "logout"
                 theme_icon_color: "Custom"
                 icon_color: C["texto"]
@@ -48,18 +62,30 @@
             height: dp(18)
 
         FloatLayout:
-            canvas.before:
-                Color:
-                    rgba: C["mapa_fondo"]
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+            id: zona
 
-            MapaEsquematico:
-                id: mapa
-                pos: self.parent.pos
-                size: self.parent.size
-                on_seleccionado: root.on_sector(self.seleccionado)
+            StencilView:
+                pos: zona.pos
+                size: zona.size
+
+                MapaSatelital:
+                    id: satelite
+                    pos: zona.pos
+                    size: zona.size
+                    zoom: 15
+                    lat: -39.545
+                    lon: -72.47
+                    double_tap_zoom: True
+                    background_color: C["mapa_fondo"]
+                    opacity: 1 if root.satelital else 0
+                    disabled: not root.satelital
+
+                MapaEsquematico:
+                    id: esquema
+                    pos: zona.pos
+                    size: zona.size
+                    opacity: 0 if root.satelital else 1
+                    disabled: root.satelital
 
             MDLabel:
                 text: root.aviso
@@ -72,49 +98,95 @@
                 pos_hint: {"center_x": .5, "center_y": .55}
                 opacity: 1 if root.aviso else 0
 
-            MDCard:
-                id: tarjeta
+            # Botones del mapa
+            MDBoxLayout:
                 orientation: "vertical"
-                size_hint: None, None
-                width: self.parent.width - dp(24)
-                height: dp(78)
-                x: self.parent.x + dp(12)
-                y: self.parent.y + dp(12)
-                padding: dp(16), dp(12)
-                radius: [dp(20)]
-                md_bg_color: C["superficie"]
-                line_color: C["borde_suave"]
-                elevation: 1
-                opacity: 0
+                adaptive_size: True
+                spacing: dp(8)
+                pos_hint: {"right": .97, "top": .98}
 
-                MDLabel:
-                    text: "SECTOR TOCADO"
-                    font_style: "Overline"
-                    bold: True
-                    theme_text_color: "Custom"
-                    text_color: C["accion"]
-                MDLabel:
-                    id: tarjeta_titulo
-                    font_style: "Subtitle1"
-                    bold: True
-                    theme_text_color: "Custom"
-                    text_color: C["texto"]
-                MDLabel:
-                    id: tarjeta_detalle
-                    font_style: "Body2"
-                    theme_text_color: "Custom"
-                    text_color: C["texto_suave"]
+                BotonMapa:
+                    icon: "crosshairs-gps"
+                    on_release: root.centrar_en_mi()
+                BotonMapa:
+                    icon: "fit-to-page-outline"
+                    on_release: root.ver_predio()
+                BotonMapa:
+                    icon: "download-outline"
+                    on_release: root.descargar_mapa()
+                BotonMapa:
+                    icon: "map-marker-plus-outline"
+                    on_release: root.anotar_punto()
+                BotonMapa:
+                    icon: "format-list-numbered"
+                    on_release: root.ver_puntos()
+
+            Label:
+                text: "Imágenes © Esri, Maxar, Earthstar Geographics"
+                font_size: "10sp"
+                color: 1, 1, 1, .9
+                outline_width: 1
+                outline_color: 0, 0, 0
+                size_hint: None, None
+                size: self.texture_size
+                x: zona.x + dp(8)
+                y: tarjeta.top + dp(6)
+                opacity: 1 if root.satelital else 0
 
             MDFloatingActionButton:
                 icon: "plus"
                 md_bg_color: C["accion"]
                 icon_color: C["superficie"]
                 pos_hint: {"right": .96}
-                y: self.parent.y + dp(104)
+                y: tarjeta.top + dp(16)
                 on_release: root.nueva_observacion()
 
+            # Tarjeta: tu ubicación o el sector tocado
+            MDCard:
+                id: tarjeta
+                orientation: "vertical"
+                size_hint: None, None
+                width: zona.width - dp(24)
+                height: dp(86)
+                x: zona.x + dp(12)
+                y: zona.y + dp(12)
+                padding: dp(16), dp(10), dp(8), dp(10)
+                radius: [dp(18)]
+                md_bg_color: C["superficie"]
+                line_color: C["accion"] if root.tarjeta_alerta else C["borde_suave"]
+                elevation: 1
+
+                MDBoxLayout:
+                    MDLabel:
+                        text: root.tarjeta_tipo
+                        font_style: "Overline"
+                        bold: True
+                        theme_text_color: "Custom"
+                        text_color: C["accion"] if root.tarjeta_alerta or root.seleccionado else C["hoja"]
+                    MDIconButton:
+                        icon: "close"
+                        size_hint: None, None
+                        size: dp(28), dp(28)
+                        icon_size: "18sp"
+                        opacity: 1 if root.seleccionado else 0
+                        disabled: not root.seleccionado
+                        on_release: root.soltar_seleccion()
+                MDLabel:
+                    text: root.tarjeta_titulo
+                    font_style: "Subtitle1"
+                    bold: True
+                    shorten: True
+                    theme_text_color: "Custom"
+                    text_color: C["texto"]
+                MDLabel:
+                    text: root.tarjeta_detalle
+                    font_style: "Caption"
+                    shorten: True
+                    theme_text_color: "Custom"
+                    text_color: C["accion"] if root.tarjeta_alerta else C["texto_suave"]
+
         MDLabel:
-            text: root.detalle
+            text: "Toca un sector para ver sus datos · descarga el mapa para usarlo sin señal"
             font_style: "Caption"
             halign: "center"
             theme_text_color: "Custom"
