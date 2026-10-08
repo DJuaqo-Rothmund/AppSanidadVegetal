@@ -6,11 +6,14 @@ Es la app "hermana" de la app de fenología (PhenoRubus): usa su misma
 paleta, tipografía y forma de compilar.
 
 La especificación completa está en [`SPEC.md`](SPEC.md). Este repositorio
-va en la **etapa 1 (Base del proyecto)**.
+va en la **etapa 2 (Mapa y sectores)**.
 
-| Inicio de sesión | Mapa provisorio |
-|---|---|
-| ![Inicio de sesión](docs/capturas/login.png) | ![Mapa](docs/capturas/mapa-provisorio.png) |
+| Inicio de sesión | Predio | Tu ubicación |
+|---|---|---|
+| ![Inicio de sesión](docs/capturas/login.png) | ![Predio](docs/capturas/mapa-predio.png) | ![GPS](docs/capturas/mapa-gps.png) |
+
+Las capturas se tomaron sin acceso a ESRI, así que el fondo aparece liso. En
+el teléfono se ve la imagen satelital.
 
 ## Estructura
 
@@ -27,8 +30,10 @@ sanidad/
   db/          Base SQLite local (esquema, altas, ediciones, anulaciones)
   firebase/    Cliente REST: Authentication y Firestore
   catalogo/    Carga y validación del catálogo
-  geo/         Sectores GeoJSON, punto-en-polígono y proyección a pantalla
+  geo/         Sectores GeoJSON, punto-en-polígono, distancia al borde y teselas (MBTiles)
+  gps.py       GPS del teléfono (plyer) o simulado en el computador
   sesion.py    Sesión del monitor (inicio, renovación del token, cierre)
+  prueba_terreno.py  Puntos de prueba de la etapa 2 (sector deducido vs. plano)
   ui/          Interfaz Kivy/KivyMD: tema, pantallas y archivos .kv
 tests/         Pruebas con pytest de todo lo que no es interfaz
 ```
@@ -50,6 +55,39 @@ blanco y la lista del sector en `variedades_sector`.
 python scripts/importar_sectores.py ../PuntoRiesgo/src/assets/data/el_amanecer.geojson \
   datos/sectores-el-amanecer.json --variedad-por-defecto Wakefield
 ```
+
+## Mapa, GPS y uso sin señal (etapa 2)
+
+- **Mapa satelital:** usa ESRI World Imagery. Cada tesela que se ve con
+  señal queda guardada en `mapa/esri_world_imagery.mbtiles`, dentro de los
+  datos de la app. Sin señal, el mapa usa lo guardado. Si te acercas más allá
+  de lo descargado, agranda la imagen del zoom anterior.
+- **Descargar el mapa del predio:** botón ⬇ del mapa. Baja las teselas del
+  zoom 13 al 19 que tocan cada sector, más 250 m de margen: unas 2100 teselas,
+  ~50 MB. Conviene hacerlo con wifi. Se puede detener y retomar, y se corta
+  sola si se pierde la señal.
+- **Vista esquemática:** el botón del mapa en el encabezado cambia entre
+  satélite y esquema, que dibuja solo los polígonos.
+- **GPS:** la tarjeta inferior muestra:
+  - el sector, equipo y variedad deducidos;
+  - la precisión del GPS y la distancia al borde;
+  - las coordenadas.
+
+  Si la precisión es mayor que la distancia al borde, avisa **"Cerca del
+  borde: confirma el sector"**. Fuera del predio, indica el sector más
+  cercano.
+- **Prueba de 10 puntos:** el botón 📍+ anota el punto actual con una nota,
+  por ejemplo lo que dice el plano, y el botón de lista muestra los puntos
+  anotados para compararlos con el plano.
+- **En el computador:** no hay GPS, así que se simula con una variable de
+  entorno:
+
+  ```bash
+  SANIDAD_GPS_FALSO="-39.548097,-72.463256,6" python main.py   # lat, lng, precisión en m
+  ```
+
+> **Términos de ESRI.** La descarga masiva y el uso sin señal de World
+> Imagery están sujetos a los términos de Esri. Revisa que tu uso lo permita.
 
 ## Configurar Firebase
 
