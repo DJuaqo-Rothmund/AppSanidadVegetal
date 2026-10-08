@@ -158,12 +158,35 @@ cada entrega, porque Android solo instala encima si la versión es mayor.
      desconocido"** para el navegador o App Tester;
    - abre **Sanidad · El Amanecer** y entra con su correo y contraseña.
 
-> **Firma.** El APK *debug* se firma con una llave de prueba que Buildozer
-> crea en cada equipo. Sirve para la etapa 1. Antes de que los monitores
-> usen la app en serio hay que crear la **llave de firma de producción**
-> (keystore) y compilar en modo *release*. Esa llave se guarda fuera del
-> repositorio y con respaldo, porque sin ella no se puede actualizar la app
-> instalada.
+## Llave de firma
+
+La app se firma con la llave `sanidad-el-amanecer.keystore`: PKCS12, RSA de
+4096 bits, alias `sanidad`, válida hasta 2056. Con la misma firma, cada
+versión nueva se instala **encima** de la anterior sin perder datos.
+
+- La llave y su contraseña **no están en el repositorio**. Se guardan con
+  respaldo en dos lugares seguros, porque sin ella no se puede actualizar la
+  app instalada.
+- Huella SHA-256:
+  `92:F0:C3:3F:23:1D:CC:8E:A6:1F:0E:1A:A4:5F:16:33:7F:C6:DA:E5:D5:17:88:E5:05:4C:13:A9:8C:3B:B7:55`
+- GitHub Actions firma el APK si existen estos secretos (*Settings → Secrets
+  and variables → Actions*):
+  - `ANDROID_KEYSTORE_BASE64`: la llave en base64 (`base64 -w0 sanidad-el-amanecer.keystore`).
+  - `ANDROID_KEYSTORE_PASSWORD`: la contraseña.
+  - `ANDROID_KEY_ALIAS`: `sanidad`.
+
+  Después de firmar, la compilación verifica la huella. Si el secreto trae
+  otra llave, falla. Si faltan los secretos, el APK queda con una firma de
+  prueba distinta en cada compilación, y entonces hay que desinstalar antes
+  de instalar la nueva versión.
+- Para firmar a mano un APK compilado en WSL:
+
+  ```bash
+  BT=~/.buildozer/android/platform/android-sdk/build-tools/<versión>
+  $BT/zipalign -f -p 4 bin/sanidad-*.apk /tmp/alineado.apk
+  $BT/apksigner sign --ks sanidad-el-amanecer.keystore --ks-key-alias sanidad \
+    --out bin/sanidad-firmado.apk /tmp/alineado.apk
+  ```
 
 ## Pruebas
 
