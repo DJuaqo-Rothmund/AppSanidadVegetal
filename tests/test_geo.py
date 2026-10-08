@@ -111,3 +111,41 @@ def test_variedades_de_el_amanecer():
     s1e1 = [s for s in sectores if s.propiedades["sector_id"] == "E1-S1"]
     assert len(s1e1) == 4 and all(s.variedad is None for s in s1e1)
     assert all(s.propiedades["variedades_sector"] == ["Meeker", "Cascade Harvest"] for s in s1e1)
+
+
+# --- ubicación con distancia al borde ------------------------------------------
+
+from sanidad.geo import distancia_a_borde_m, ubicar  # noqa: E402
+
+M_POR_GRADO = 111_195.0
+
+
+def test_distancia_a_borde_en_metros():
+    # Cuadrado de 0,01° de lado cerca del ecuador: el centro está a ~556 m del borde.
+    cuadrado = [[(0, 0), (0.01, 0), (0.01, 0.01), (0, 0.01), (0, 0)]]
+    assert distancia_a_borde_m(0.005, 0.005, cuadrado) == pytest.approx(0.005 * M_POR_GRADO, rel=1e-3)
+    assert distancia_a_borde_m(0.015, 0.005, cuadrado) == pytest.approx(0.005 * M_POR_GRADO, rel=1e-3)
+    assert distancia_a_borde_m(0.0, 0.0, cuadrado) == pytest.approx(0, abs=1e-6)
+
+
+def test_ubicar_dentro_y_en_el_borde():
+    sectores = sectores_desde_geojson(GEOJSON)
+    u = ubicar(sectores, -39.095, -72.595, precision_m=5)
+    assert u.sector.id == "s1-e1-a" and u.cercano is None
+    # El borde más cercano es el este/oeste: 0,005° de longitud a -39,1° de latitud.
+    assert u.distancia_borde_m == pytest.approx(0.005 * M_POR_GRADO * 0.7759, rel=0.01)
+    assert not u.en_borde
+    cerca_del_borde = ubicar(sectores, -39.0999, -72.595, precision_m=15)
+    assert cerca_del_borde.sector.id == "s1-e1-a" and cerca_del_borde.en_borde
+
+
+def test_ubicar_fuera_del_predio_da_el_sector_mas_cercano():
+    sectores = sectores_desde_geojson(GEOJSON)
+    u = ubicar(sectores, -39.095, -72.585, precision_m=5)  # entre s1 (-72.59) y s2 (-72.58)
+    assert u.sector is None and u.cercano.id in ("s1-e1-a", "s2-e1")
+    assert u.distancia_borde_m == pytest.approx(0.005 * M_POR_GRADO * 0.7765, rel=0.01)
+
+
+def test_ubicar_sin_sectores():
+    u = ubicar([], -39, -72)
+    assert u.sector is None and u.cercano is None and not u.en_borde

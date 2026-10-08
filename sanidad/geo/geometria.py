@@ -8,6 +8,8 @@ import json
 import math
 from dataclasses import dataclass, field
 
+RADIO_TIERRA_M = 6371008.8
+
 
 @dataclass
 class Sector:
@@ -96,6 +98,62 @@ def sectores_desde_geojson(geojson):
 def cargar_sectores(ruta):
     with open(ruta, encoding="utf-8") as f:
         return sectores_desde_geojson(json.load(f))
+
+
+def _a_metros(lng, lat, lat0):
+    """Proyección equirectangular local en metros (sirve para distancias de pocos km)."""
+    k = math.cos(math.radians(lat0))
+    return (math.radians(lng) * k * RADIO_TIERRA_M, math.radians(lat) * RADIO_TIERRA_M)
+
+
+def distancia_a_borde_m(lng, lat, poligono):
+    """Distancia en metros desde el punto al borde más cercano del polígono."""
+    px, py = _a_metros(lng, lat, lat)
+    mejor = math.inf
+    for anillo in poligono:
+        pts = [_a_metros(a[0], a[1], lat) for a in anillo]
+        for (x0, y0), (x1, y1) in zip(pts, pts[1:] + pts[:1]):
+            dx, dy = x1 - x0, y1 - y0
+            largo2 = dx * dx + dy * dy
+            t = 0.0 if largo2 == 0 else max(0.0, min(1.0, ((px - x0) * dx + (py - y0) * dy) / largo2))
+            mejor = min(mejor, math.hypot(px - (x0 + t * dx), py - (y0 + t * dy)))
+    return mejor
+
+
+@dataclass
+class Ubicacion:
+    """Resultado de ubicar una coordenada en el predio."""
+    lat: float
+    lng: float
+    precision_m: float = None
+    sector: "Sector" = None        # sector que contiene el punto (None si está fuera)
+    distancia_borde_m: float = None  # dentro: al borde de su sector; fuera: al sector más cercano
+    cercano: "Sector" = None       # fuera del predio: el sector más cercano
+
+    @property
+    def en_borde(self):
+        """True si la precisión del GPS no alcanza para asegurar el sector."""
+        return (self.precision_m is not None and self.distancia_borde_m is not None
+                and self.distancia_borde_m <= self.precision_m)
+
+
+def ubicar(sectores, lat, lng, precision_m=None):
+    """Deduce el sector de una coordenada y qué tan lejos está del borde."""
+    u = Ubicacion(lat=lat, lng=lng, precision_m=precision_m)
+    if not sectores:
+        return u
+    dentro = sector_en(sectores, lat, lng)
+    if dentro is not None:
+        u.sector = dentro
+        u.distancia_borde_m = min(distancia_a_borde_m(lng, lat, p) for p in dentro.poligonos)
+        return u
+    mejor, distancia = None, math.inf
+    for s in sectores:
+        d = min(distancia_a_borde_m(lng, lat, p) for p in s.poligonos)
+        if d < distancia:
+            mejor, distancia = s, d
+    u.cercano, u.distancia_borde_m = mejor, distancia
+    return u
 
 
 def sector_en(sectores, lat, lng):
