@@ -1,0 +1,806 @@
+{
+ "3": {
+  "cientifico": "Alisma lanceolatum With."
+ },
+ "4": {
+  "cientifico": "Alisma plantago-aquatica L."
+ },
+ "5": {
+  "cientifico": "Sagittaria montevidensis Cham. et Schlecht. ssp. chilensis (Cham. et Schlecht.) Bogin"
+ },
+ "7": {
+  "cientifico": "Amaranthus retroflexus L."
+ },
+ "8": {
+  "cientifico": "Alstroemeria aurea R. Graham"
+ },
+ "9": {
+  "cientifico": "Conium maculatum L.",
+  "ingles": "Poison hemlock"
+ },
+ "10": {
+  "cientifico": "Daucus carota L."
+ },
+ "11": {
+  "cientifico": "Eryngium rostratum Cav."
+ },
+ "13": {
+  "cientifico": "Pastinaca sativa L.",
+  "nombres_comunes": [
+   "PASTINACA",
+   "APIO DE CAMPO"
+  ]
+ },
+ "14": {
+  "cientifico": "Achillea millefolium L."
+ },
+ "15": {
+  "cientifico": "Ambrosia artemisiifolia L."
+ },
+ "16": {
+  "cientifico": "Anthemis arvensis L."
+ },
+ "18": {
+  "cientifico": "Aster squamatus (Spreng.) Hieron."
+ },
+ "19": {
+  "cientifico": "Bellis perennis L.",
+  "ingles": "English daisy"
+ },
+ "20": {
+  "cientifico": "Bidens aurea (Aiton) Sherff"
+ },
+ "21": {
+  "cientifico": "Bidens pilosa L."
+ },
+ "23": {
+  "cientifico": "Centaurea melitensis L."
+ },
+ "25": {
+  "cientifico": "Centaurea solstitialis L."
+ },
+ "26": {
+  "cientifico": "Chamomilla suaveolens (Pursh) Rydb."
+ },
+ "28": {
+  "cientifico": "Cirsium arvense (L.) Scop."
+ },
+ "30": {
+  "cientifico": "Coleostephus myconis (L.) Reichenb. f."
+ },
+ "31": {
+  "cientifico": "Crepis capillaris (L.) Wallr."
+ },
+ "32": {
+  "cientifico": "Cynara cardunculus L.",
+  "ingles": "Cardoon, wild artichoke"
+ },
+ "33": {
+  "cientifico": "Galinsoga parviflora Cav.",
+  "ingles": "Smallflower galinsoga"
+ },
+ "34": {
+  "cientifico": "Gamochaeta spicata (Lam.) Cabr.",
+  "ingles": "Purple cudweed"
+ },
+ "35": {
+  "cientifico": "Hypochaeris radicata L."
+ },
+ "36": {
+  "cientifico": "Lactuca serriola L."
+ },
+ "39": {
+  "cientifico": "Leucanthemum vulgare Lam."
+ },
+ "41": {
+  "cientifico": "Picris echioides L.",
+  "ingles": "Bristly oxtongue"
+ },
+ "42": {
+  "cientifico": "Pluchea absinthioides (Hook. et Arn.) H. Robinson et Cuatrec.",
+  "ingles": null
+ },
+ "43": {
+  "cientifico": "Senecio aquaticus Hill ssp. barbareifolius (Wimmer et Grab.) Walters"
+ },
+ "45": {
+  "cientifico": "Sigesbeckia jorullensis Kunth",
+  "nombres_comunes": [
+   "CURAVI(?)",
+   "MELOSA",
+   "PEGAJOSA"
+  ]
+ },
+ "47": {
+  "cientifico": "Solidago chilensis Meyen"
+ },
+ "48": {
+  "cientifico": "Sonchus asper (L.) J. Hill"
+ },
+ "49": {
+  "ingles": "Annual sowthistle"
+ },
+ "50": {
+  "cientifico": "Sonchus tenerrimus L.",
+  "nombres_comunes": [
+   "ÑILHUE",
+   "SONCHO"
+  ],
+  "ingles": null
+ },
+ "51": {
+  "cientifico": "Taraxacum officinale G. Weber ex Wigg.",
+  "nombres_comunes": [
+   "DIENTE DE LEÓN",
+   "LECHUGUILLA",
+   "AMARGÓN"
+  ],
+  "ingles": "Common dandelion"
+ },
+ "52": {
+  "nombres_comunes": [
+   "CLONQUI",
+   "ABROJO"
+  ]
+ },
+ "53": {
+  "nombres_comunes": [
+   "CLONQUI",
+   "CEPACABALLO",
+   "ABROJO"
+  ],
+  "ingles": "Spiny cocklebur"
+ },
+ "54": {
+  "nombres_comunes": [
+   "TRUPA",
+   "GARRAPATILLA"
+  ],
+  "ingles": "Blue houndstongue"
+ },
+ "55": {
+  "cientifico": "Echium plantagineum L.",
+  "nombres_comunes": [
+   "HIERBA AZUL",
+   "LENGUA DE GATO",
+   "VIBORERA"
+  ]
+ },
+ "56": {
+  "nombres_comunes": [
+   "HIERBA AZUL",
+   "VIBORERA",
+   "LENGUA DE GATO"
+  ],
+  "ingles": "Blueweed, blue thistle"
+ },
+ "57": {
+  "cientifico": "Plagiobothrys fulvus (Hook. et Arn.) I.M. Johnst.",
+  "nombres_comunes": [
+   "PEGAJOSA"
+  ]
+ },
+ "58": {
+  "cientifico": "Barbarea verna (Miller) Aschers."
+ },
+ "59": {
+  "nombres_comunes": [
+   "YUYO",
+   "MORTAGA"
+  ]
+ },
+ "60": {
+  "cientifico": "Capsella bursa-pastoris (L.) Medik.",
+  "nombres_comunes": [
+   "BOLSITA DEL PASTOR",
+   "MASTUERZO",
+   "BOLSITA"
+  ],
+  "ingles": "Shepherd's-purse"
+ },
+ "61": {
+  "cientifico": "Cardamine hirsuta L."
+ },
+ "62": {
+  "cientifico": "Coronopus didymus (L.) J.E. Sm.",
+  "nombres_comunes": [
+   "MASTUERZO",
+   "YERBA HEDIONDA"
+  ]
+ },
+ "63": {
+  "cientifico": "Raphanus raphanistrum L.",
+  "nombres_comunes": [
+   "RÁBANO",
+   "RÁBANO SILVESTRE"
+  ],
+  "ingles": "Wild radish"
+ },
+ "64": {
+  "cientifico": "Rapistrum rugosum (L.) All.",
+  "nombres_comunes": [
+   "RAPISTRO",
+   "FALSO YUYO",
+   "YUYO"
+  ],
+  "ingles": "Bastard cabbage, turnipweed"
+ },
+ "65": {
+  "cientifico": "Rorippa sylvestris (L.) Besser",
+  "nombres_comunes": [
+   "PATA DE LAUCHA"
+  ]
+ },
+ "66": {
+  "cientifico": "Sisymbrium officinale (L.) Scop.",
+  "nombres_comunes": [
+   "MOSTACILLA",
+   "MOSTAZA"
+  ]
+ },
+ "67": {
+  "cientifico": "Agrostemma githago L.",
+  "nombres_comunes": [
+   "CIZAÑA PÚRPURA",
+   "NEGUILLÓN"
+  ]
+ },
+ "68": {
+  "cientifico": "Cerastium arvense L.",
+  "nombres_comunes": [
+   "CERASTIO",
+   "CUERNECITA"
+  ]
+ },
+ "69": {
+  "cientifico": "Cerastium fontanum L.",
+  "nombres_comunes": [
+   "CERASTIO",
+   "OREJA DE RATÓN"
+  ],
+  "ingles": "Mouseear chickweed"
+ },
+ "71": {
+  "cientifico": "Saponaria officinalis L.",
+  "nombres_comunes": [
+   "SAPONARIA",
+   "JABONERA",
+   "HIERBA JABONERA"
+  ]
+ },
+ "72": {
+  "ingles": "Knawel, German knotweed"
+ },
+ "73": {
+  "cientifico": "Silene gallica L.",
+  "nombres_comunes": [
+   "CALABACILLO"
+  ]
+ },
+ "74": {
+  "nombres_comunes": [
+   "PASTO PINITO",
+   "LINACILLA",
+   "ESPÉRGULA"
+  ]
+ },
+ "75": {
+  "cientifico": "Spergularia rubra (L.) J. et K. Presl",
+  "nombres_comunes": [
+   "TIQUI-TIQUI"
+  ]
+ },
+ "76": {
+  "cientifico": "Stellaria media (L.) Vill.",
+  "nombres_comunes": [
+   "QUILLOI-QUILLOI",
+   "BOCADO DE GALLINA"
+  ],
+  "ingles": "Common chickweed"
+ },
+ "77": {
+  "nombres_comunes": [
+   "QUINGUILLA",
+   "QUINGUA DEL CAMPO"
+  ],
+  "ingles": "Common lambsquarters"
+ },
+ "78": {
+  "cientifico": "Chenopodium ficifolium J.E. Sm.",
+  "nombres_comunes": [
+   "QUINGUILLA"
+  ]
+ },
+ "79": {
+  "cientifico": "Calystegia sepium (L.) R. Br.",
+  "nombres_comunes": [
+   "CARRICILLO",
+   "CARRIZALILLO",
+   "SUSPIRO"
+  ]
+ },
+ "80": {
+  "nombres_comunes": [
+   "CORREHUELA",
+   "SUSPIRO BLANCO",
+   "BOCINA"
+  ],
+  "ingles": "Field bindweed, field morningglory"
+ },
+ "81": {
+  "nombres_comunes": [
+   "OREJA DE RATÓN",
+   "DICONDRA",
+   "POCHA"
+  ]
+ },
+ "82": {
+  "ingles": "Tall morningglory"
+ },
+ "83": {
+  "nombres_comunes": [
+   "CUSCUTA",
+   "CABELLO DE ÁNGEL"
+  ]
+ },
+ "84": {
+  "cientifico": "Cyperus difformis L.",
+  "nombres_comunes": [
+   "CORTADERA",
+   "LLEIVÚN"
+  ],
+  "ingles": "Smallflower flatsedge, umbrella plant"
+ },
+ "85": {
+  "nombres_comunes": [
+   "CORTADERA",
+   "LLEIVÚN",
+   "MALCOCHO"
+  ],
+  "ingles": "Tall umbrellaplant"
+ },
+ "86": {
+  "cientifico": "Cyperus rotundus L.",
+  "nombres_comunes": [
+   "CHUFA ROJA",
+   "COQUILLA",
+   "ALMENDRA DE TIERRA"
+  ]
+ },
+ "87": {
+  "cientifico": "Eleocharis palustris (L.) Roem. et Schult.",
+  "nombres_comunes": [
+   "JUNCO DE ESPIGA",
+   "QUILENEN"
+  ],
+  "ingles": "Common spikerush, creeping spikerush"
+ },
+ "88": {
+  "cientifico": "Dipsacus sativus (L.) Honck."
+ },
+ "89": {
+  "cientifico": "Knautia integrifolia (L.) Bertol."
+ },
+ "90": {
+  "cientifico": "Equisetum bogotense Kunth",
+  "nombres_comunes": [
+   "HIERBA DEL PLATERO",
+   "LIMPIA PLATA",
+   "YERBA DE LA PLATA"
+  ]
+ },
+ "91": {
+  "nombres_comunes": [
+   "PICHOA",
+   "PICHOGA"
+  ]
+ },
+ "92": {
+  "nombres_comunes": [
+   "PICHOA",
+   "PICHOGA",
+   "MARIQUITA"
+  ]
+ },
+ "93": {
+  "cientifico": "Euphorbia platyphyllos L.",
+  "nombres_comunes": [
+   "PICHOGA",
+   "PICHOA"
+  ]
+ },
+ "94": {
+  "ingles": "Scotch broom"
+ },
+ "95": {
+  "cientifico": "Cytisus striatus (J. Hill) Rothm."
+ },
+ "96": {
+  "cientifico": "Galega officinalis L."
+ },
+ "97": {
+  "nombres_comunes": [
+   "ALFALFA CHILOTA",
+   "LOTERA"
+  ],
+  "ingles": "Greater birdsfoot trefoil"
+ },
+ "98": {
+  "nombres_comunes": [
+   "LUPINO AMARGO",
+   "LUPINO AZUL"
+  ]
+ },
+ "99": {
+  "cientifico": "Lupinus arboreus Sims"
+ },
+ "101": {
+  "cientifico": "Trifolium angustifolium L.",
+  "nombres_comunes": [
+   "TRÉBOL DE HOJA ANGOSTA"
+  ],
+  "ingles": "Narrowleaf clover"
+ },
+ "102": {
+  "cientifico": "Ulex europaeus L."
+ },
+ "103": {
+  "cientifico": "Vicia benghalensis L.",
+  "ingles": null
+ },
+ "105": {
+  "cientifico": "Vicia sativa L.",
+  "ingles": "Common vetch"
+ },
+ "106": {
+  "cientifico": "Fumaria capreolata L.",
+  "ingles": "Rampant fumitory"
+ },
+ "107": {
+  "cientifico": "Erodium cicutarium (L.) L'Hér. ex Aiton"
+ },
+ "108": {
+  "cientifico": "Erodium moschatum (L.) L'Hér. ex Aiton",
+  "ingles": "Whitestem filaree"
+ },
+ "109": {
+  "omitir": true
+ },
+ "110": {
+  "cientifico": "Geranium dissectum L."
+ },
+ "111": {
+  "cientifico": "Hypericum perforatum L.",
+  "ingles": "Common St. Johnswort"
+ },
+ "112": {
+  "cientifico": "Juncus bufonius L."
+ },
+ "113": {
+  "cientifico": "Juncus procerus E. Meyer"
+ },
+ "114": {
+  "cientifico": "Lamium amplexicaule L."
+ },
+ "115": {
+  "cientifico": "Mentha pulegium L."
+ },
+ "116": {
+  "cientifico": "Prunella vulgaris L."
+ },
+ "117": {
+  "ingles": "Wild garlic"
+ },
+ "118": {
+  "cientifico": "Linum usitatissimum L.",
+  "ingles": "Common flax"
+ },
+ "120": {
+  "cientifico": "Lythrum hyssopifolia L."
+ },
+ "124": {
+  "cientifico": "Ludwigia peploides (Kunth) Raven ssp. montevidensis (Spreng.) Raven",
+  "ingles": "Creeping waterprimrose"
+ },
+ "125": {
+  "cientifico": "Oenothera stricta Ledeb. ex Link",
+  "ingles": "Sand eveningprimrose"
+ },
+ "126": {
+  "nombres_comunes": [
+   "OROBANQUE DEL TRÉBOL"
+  ]
+ },
+ "127": {
+  "cientifico": "Orobanche ramosa L.",
+  "ingles": "Hemp broomrape"
+ },
+ "128": {
+  "cientifico": "Oxalis micrantha Bertero ex Colla"
+ },
+ "130": {
+  "cientifico": "Eschscholzia californica Cham."
+ },
+ "132": {
+  "cientifico": "Plantago lanceolata L."
+ },
+ "133": {
+  "cientifico": "Plantago major L."
+ },
+ "134": {
+  "cientifico": "Agrostis capillaris L."
+ },
+ "135": {
+  "cientifico": "Anthoxanthum odoratum L."
+ },
+ "136": {
+  "cientifico": "Arrhenatherum elatius (L.) P. Beauv. ex J. et K. Presl ssp. bulbosum (Willd.) Schübl. et Martens",
+  "ingles": null
+ },
+ "137": {
+  "cientifico": "Avena fatua L.",
+  "ingles": "Wild oat"
+ },
+ "138": {
+  "cientifico": "Briza maxima L.",
+  "ingles": "Big quakinggrass"
+ },
+ "139": {
+  "cientifico": "Briza minor L.",
+  "ingles": "Little quakinggrass"
+ },
+ "140": {
+  "cientifico": "Bromus hordeaceus L.",
+  "ingles": "Soft bromegrass, soft chess"
+ },
+ "141": {
+  "cientifico": "Cynosurus echinatus L."
+ },
+ "142": {
+  "cientifico": "Digitaria sanguinalis (L.) Scop."
+ },
+ "143": {
+  "cientifico": "Echinochloa crus-galli (L.) P. Beauv."
+ },
+ "144": {
+  "cientifico": "Echinochloa crus-pavonis (Kunth) J.H. Schultes"
+ },
+ "145": {
+  "cientifico": "Elytrigia repens (L.) Nevski"
+ },
+ "146": {
+  "cientifico": "Holcus lanatus L.",
+  "nombres_comunes": [
+   "PASTO MIEL",
+   "PASTO DULCE"
+  ]
+ },
+ "148": {
+  "cientifico": "Panicum capillare L.",
+  "nombres_comunes": [
+   "PASTO DE LA PERDIZ"
+  ]
+ },
+ "149": {
+  "nombres_comunes": [
+   "MAICILLO",
+   "CHÉPICA",
+   "PASTO MIEL"
+  ],
+  "ingles": null
+ },
+ "150": {
+  "cientifico": "Poa annua L.",
+  "nombres_comunes": [
+   "PIOJILLO",
+   "HIERBA DE LA PERDIZ"
+  ]
+ },
+ "151": {
+  "cientifico": "Setaria pumila (Poiret) Roemer et Schultes"
+ },
+ "152": {
+  "nombres_comunes": [
+   "MAICILLO",
+   "SORGO",
+   "SORGO DE ALEPO"
+  ]
+ },
+ "153": {
+  "nombres_comunes": [
+   "VULPIA",
+   "PASTO SEDILLA",
+   "PELILLO"
+  ]
+ },
+ "154": {
+  "cientifico": "Fallopia convolvulus (L.) A. Löve",
+  "nombres_comunes": [
+   "ENREDADERA",
+   "POROTILLO"
+  ],
+  "ingles": "Wild buckwheat"
+ },
+ "155": {
+  "nombres_comunes": [
+   "SANGUINARIA",
+   "PASTO DEL POLLO",
+   "CENTINODIA"
+  ],
+  "ingles": "Prostrate knotweed"
+ },
+ "156": {
+  "cientifico": "Polygonum persicaria L.",
+  "nombres_comunes": [
+   "DURAZNILLO",
+   "PATA DE PALOMA"
+  ]
+ },
+ "157": {
+  "cientifico": "Rumex acetosella L.",
+  "nombres_comunes": [
+   "VINAGRILLO",
+   "ROMACILLA",
+   "ACETOSA"
+  ]
+ },
+ "158": {
+  "cientifico": "Rumex crispus L.",
+  "nombres_comunes": [
+   "ROMAZA",
+   "LENGUA DE VACA",
+   "HUALTATA"
+  ]
+ },
+ "159": {
+  "cientifico": "Rumex pulcher L.",
+  "ingles": "Fiddleleaf dock"
+ },
+ "160": {
+  "cientifico": "Calandrinia compressa Schrad. ex DC.",
+  "nombres_comunes": [
+   "VINAGRILLO",
+   "LENGUA DE SERPIENTE"
+  ],
+  "ingles": "Calandrinia"
+ },
+ "161": {
+  "cientifico": "Portulaca oleracea L.",
+  "ingles": "Common purslane"
+ },
+ "162": {
+  "cientifico": "Anagallis arvensis L.",
+  "nombres_comunes": [
+   "PIMPINELA ESCARLATA",
+   "PIMPINELA AZUL"
+  ]
+ },
+ "163": {
+  "cientifico": "Ranunculus muricatus L.",
+  "nombres_comunes": [
+   "BOTÓN DE ORO",
+   "CENTELLA",
+   "HIERBA DE LA VACA"
+  ]
+ },
+ "164": {
+  "cientifico": "Ranunculus repens L.",
+  "nombres_comunes": [
+   "BOTÓN DE ORO"
+  ]
+ },
+ "165": {
+  "cientifico": "Aphanes arvensis L."
+ },
+ "168": {
+  "cientifico": "Sanguisorba minor Scop.",
+  "nombres_comunes": [
+   "HIERBA NEGRA",
+   "PASTO NEGRO",
+   "PIMPINELA"
+  ]
+ },
+ "169": {
+  "nombres_comunes": [
+   "LENGUA DE GATO"
+  ],
+  "ingles": "Catchweed bedstraw"
+ },
+ "170": {
+  "cientifico": "Sherardia arvensis L.",
+  "nombres_comunes": [
+   "AZULILLO"
+  ]
+ },
+ "171": {
+  "cientifico": "Bartsia trixago L.",
+  "nombres_comunes": [
+   "BELARDIA",
+   "CUATRO CARAS"
+  ]
+ },
+ "173": {
+  "cientifico": "Kickxia elatine (L.) Dum.",
+  "nombres_comunes": [
+   "ALFOMBRILLA"
+  ]
+ },
+ "174": {
+  "nombres_comunes": [
+   "LINARIA"
+  ]
+ },
+ "175": {
+  "cientifico": "Parentucellia viscosa (L.) Caruel",
+  "nombres_comunes": [
+   "PEGAJOSA",
+   "BARTSIA AMARILLA"
+  ]
+ },
+ "176": {
+  "cientifico": "Verbascum thapsus L.",
+  "nombres_comunes": [
+   "HIERBA DEL PAÑO",
+   "PAÑO"
+  ]
+ },
+ "177": {
+  "cientifico": "Verbascum virgatum Stokes",
+  "nombres_comunes": [
+   "MITRÚN",
+   "RASPA LA CHOICA"
+  ],
+  "ingles": "Moth mullein"
+ },
+ "178": {
+  "nombres_comunes": [
+   "VERÓNICA"
+  ]
+ },
+ "179": {
+  "cientifico": "Cestrum parqui L'Hér.",
+  "nombres_comunes": [
+   "PALQUI",
+   "PARQUI",
+   "HEDIONDILLA"
+  ]
+ },
+ "180": {
+  "cientifico": "Datura stramonium L.",
+  "nombres_comunes": [
+   "CHAMICO",
+   "ESTRAMONIO",
+   "PAPA ESPINOSA"
+  ]
+ },
+ "181": {
+  "nombres_comunes": [
+   "HIERBA MORA",
+   "LLAGUE",
+   "TOMATILLO"
+  ]
+ },
+ "182": {
+  "nombres_comunes": [
+   "VATRO",
+   "PAJA DE ESTERA",
+   "TOTORA"
+  ]
+ },
+ "183": {
+  "nombres_comunes": [
+   "ORTIGA"
+  ]
+ },
+ "184": {
+  "cientifico": "Verbena litoralis Kunth"
+ },
+ "185": {
+  "cientifico": "Viola arvensis Murray",
+  "nombres_comunes": [
+   "VIOLETA",
+   "PENSAMIENTO",
+   "TRINITARIA"
+  ]
+ }
+}
