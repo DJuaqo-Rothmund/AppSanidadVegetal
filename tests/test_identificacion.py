@@ -91,8 +91,8 @@ def test_catalogo_junta_malezas_y_organismos(catalogo):
     assert catalogo.ficha("rubus_ulmifolius")["grupo"] == "maleza"
     assert catalogo.ficha("botrytis")["grupo"] == "enfermedad"
     assert catalogo.ficha("drosophila_suzukii")["grupo"] == "plaga"
-    # la zarzamora del catálogo de monitoreo no duplica la del libro
-    assert catalogo.ficha("zarzamora") is not None or "rubus_ulmifolius" in catalogo.especies
+    # la zarzamora del catálogo de monitoreo es Rubus ulmifolius del libro: no se duplica
+    assert catalogo.ficha("zarzamora") is None and catalogo.ficha("rubus_ulmifolius")
 
 
 @pytest.mark.parametrize("texto, esperado", [

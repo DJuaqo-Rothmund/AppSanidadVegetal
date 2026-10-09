@@ -81,6 +81,15 @@
             font_size: "15sp"
             on_release: root.entrar()
 
+        MDFlatButton:
+            text: "USAR SIN CUENTA (MODO DE PRUEBA)"
+            theme_text_color: "Custom"
+            text_color: C["hoja"]
+            pos_hint: {"center_x": .5}
+            opacity: 1 if root.sin_firebase else 0
+            disabled: not root.sin_firebase
+            on_release: root.entrar_sin_cuenta()
+
         MDSpinner:
             size_hint: None, None
             size: dp(28), dp(28)

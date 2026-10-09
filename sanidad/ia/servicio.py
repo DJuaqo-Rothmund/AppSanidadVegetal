@@ -22,6 +22,12 @@ def _plano(texto):
     return "".join(c for c in t if unicodedata.category(c) != "Mn")
 
 
+def _binomio(cientifico):
+    """'Rubus ulmifolius Schott' -> 'rubus ulmifolius' (género y especie, sin autor)."""
+    palabras = _plano(cientifico).split()
+    return " ".join(palabras[:2]) if len(palabras) >= 2 and palabras[1][:1].isalpha() else ""
+
+
 class CatalogoEspecies:
     """Especies identificables: las del libro de malezas y los organismos del catálogo de monitoreo."""
 
@@ -31,9 +37,10 @@ class CatalogoEspecies:
             for e in especies_malezas.get("especies", []):
                 self.especies[e["id"]] = dict(e, grupo="maleza")
         if catalogo_monitoreo is not None:
+            binomios = {_binomio(e.get("cientifico")) for e in self.especies.values()}
             for o in catalogo_monitoreo.organismos:
-                if o["id"] in self.especies:
-                    continue
+                if o["id"] in self.especies or _binomio(o.get("cientifico")) in binomios - {""}:
+                    continue  # misma especie que una del libro (p. ej., zarzamora)
                 self.especies[o["id"]] = {
                     "id": o["id"], "grupo": o["grupo"], "cientifico": o.get("cientifico") or "",
                     "nombres_comunes": [o["nombre"].upper()], "familia": None, "fotos": [],

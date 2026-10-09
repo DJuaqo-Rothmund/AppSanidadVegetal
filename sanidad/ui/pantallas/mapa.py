@@ -53,7 +53,10 @@ class PantallaMapa(MDScreen):
 
     def on_pre_enter(self, *_):
         app = App.get_running_app()
-        self.usuario = app.sesion.sesion.email if app.sesion and app.sesion.activa else ""
+        if app.sesion and app.sesion.activa:
+            self.usuario = app.sesion.sesion.email
+        else:
+            self.usuario = "Sin cuenta · modo de prueba (los datos quedan en este teléfono)"
         self.aviso = "" if app.sectores else f"Falta el archivo de sectores ({SECTORES.name})."
         self.satelital = app.base.leer_ajuste("mapa_satelital", True)
         if not self._mapa_listo:
