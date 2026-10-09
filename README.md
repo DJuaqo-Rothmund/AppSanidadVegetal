@@ -32,6 +32,8 @@ sanidad/
   catalogo/    Carga y validación del catálogo
   geo/         Sectores GeoJSON, punto-en-polígono, distancia al borde y teselas (MBTiles)
   gps.py       GPS del teléfono (plyer) o simulado en el computador
+  medios.py    Cámara y galería (Android) o selector de archivos (computador)
+  ia/          MobileNet en numpy, identificador por vecinos y servicio de referencias
   sesion.py    Sesión del monitor (inicio, renovación del token, cierre)
   prueba_terreno.py  Puntos de prueba de la etapa 2 (sector deducido vs. plano)
   ui/          Interfaz Kivy/KivyMD: tema, pantallas y archivos .kv
@@ -54,6 +56,49 @@ blanco y la lista del sector en `variedades_sector`.
 ```bash
 python scripts/importar_sectores.py ../PuntoRiesgo/src/assets/data/el_amanecer.geojson \
   datos/sectores-el-amanecer.json --variedad-por-defecto Wakefield
+```
+
+## Identificación por foto (IA local)
+
+Botón 🍃 del mapa → **Identificar**:
+
+1. **Tomar foto** o **Galería**.
+2. La IA sugiere las **3 especies más probables** con su confianza y la foto
+   del libro. La ⓘ abre la ficha: fotos, descripción, ciclo de vida, hábitat
+   y origen.
+3. **Es esta** confirma la especie. Si no está entre las tres, **Otra
+   especie…** permite buscarla por nombre común, científico o familia.
+4. Cada confirmación guarda la foto como **referencia de terreno**, y la IA
+   la usa al instante, sin reentrenar.
+
+**Cómo funciona.** MobileNetV3-Small, preentrenada en ImageNet (Keras,
+Apache 2.0), corre en el teléfono **solo con numpy**
+(`sanidad/ia/mobilenet.py`), sin TensorFlow ni TFLite y sin señal. Convierte
+cada foto en un vector de 576 valores, y cada especie se puntúa por sus
+referencias más parecidas (vecinos más cercanos por similitud coseno). La
+red no se reentrena: aprende acumulando referencias.
+
+**Referencias iniciales.** Son las 2 fotos de cada una de las 182 especies
+del libro *Malezas presentes en Chile* (N. Espinoza, INIA Carillanca, 1996),
+en `datos/`. Al compilar, `scripts/importar_malezas_pdf.py` lee las fichas y
+recorta las fotos, y `scripts/precalcular_referencias.py` calcula sus
+vectores. Estos archivos generados no se guardan en git. Los nombres que el
+OCR leyó mal se corrigen en `datos/correcciones-malezas.json`.
+
+**Qué esperar.** El libro trae una foto de la planta adulta, sobre fondo de
+estudio, y otra de la plántula o de un detalle. Las fotos de terreno son
+distintas, así que al principio las sugerencias son solo orientativas. La
+precisión sube con cada foto de El Amanecer que se confirma: con 5 a 10 por
+especie ya sugiere bien. Enfermedades y plagas empiezan sin referencias: se
+enseñan con «Otra especie…».
+
+Para generar los datos en el computador:
+
+```bash
+sudo apt install poppler-utils
+python scripts/importar_malezas_pdf.py datos/Espinoza-neira-nelson-malezas-presentes-en-chile.pdf \
+  datos/especies-malezas.json --fotos assets/especies --correcciones datos/correcciones-malezas.json
+python scripts/precalcular_referencias.py datos/especies-malezas.json assets/especies datos/referencias-malezas.npz
 ```
 
 ## Mapa, GPS y uso sin señal (etapa 2)

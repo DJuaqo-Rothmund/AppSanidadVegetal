@@ -39,6 +39,22 @@ jobs:
           sudo apt-get install -y -qq git zip unzip autoconf libtool pkg-config zlib1g-dev \
             libncurses-dev cmake libffi-dev libssl-dev automake libltdl-dev build-essential ccache lld
 
+      # Catálogo de malezas e IA: fichas, fotos y referencias se generan desde el PDF
+      # del libro (no se guardan en git; ver README, «Identificación por foto»).
+      - name: Catálogo de malezas desde el PDF
+        run: |
+          PDF=$(ls datos/*.pdf 2>/dev/null | head -1)
+          if [ -z "$PDF" ]; then
+            echo "::warning::No está el PDF de malezas: la pestaña Identificar quedará sin especies del libro"
+            exit 0
+          fi
+          sudo apt-get install -y -qq poppler-utils
+          pip install pillow numpy
+          python scripts/importar_malezas_pdf.py "$PDF" datos/especies-malezas.json \
+            --fotos assets/especies --correcciones datos/correcciones-malezas.json
+          python scripts/precalcular_referencias.py datos/especies-malezas.json assets/especies \
+            datos/referencias-malezas.npz
+
       - name: Instalar Buildozer
         run: pip install "cython<3.1" buildozer==1.6.0 setuptools
 

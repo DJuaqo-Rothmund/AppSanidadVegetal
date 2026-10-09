@@ -12,7 +12,7 @@ package.domain = cl.elamanecer
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,json,npz
 source.exclude_dirs = tests, bin, docs, .github, .buildozer, venv, .venv, __pycache__
-source.exclude_patterns = firebase_config.example.json, requirements*.txt, README.md, SPEC.md
+source.exclude_patterns = firebase_config.example.json, requirements*.txt, README.md, SPEC.md, datos/*.pdf, datos/correcciones-*.json, assets/modelos/*.md
 
 # La versión se lee de sanidad/__init__.py (__version__)
 version.regex = __version__ = ['"](.*)['"]
