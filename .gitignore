@@ -16,3 +16,8 @@ bin/
 
 # Datos locales de la app en el escritorio
 *.sqlite3
+
+# Generados desde el PDF «Malezas presentes en Chile» (scripts/importar_malezas_pdf.py)
+datos/especies-malezas.json
+datos/referencias-malezas.npz
+assets/especies/

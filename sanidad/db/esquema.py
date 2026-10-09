@@ -5,7 +5,7 @@ auditoría. Nada se borra físicamente: `eliminado = 1` oculta el registro.
 `pendiente = 1` marca lo que falta subir a Firestore.
 """
 
-VERSION_ESQUEMA = 1
+VERSION_ESQUEMA = 2  # 2: referencias_ia (identificación por foto)
 
 # Campos de auditoría comunes a todas las tablas de datos.
 AUDITORIA = """
@@ -97,6 +97,14 @@ TABLAS = {
         cambio_cebo  INTEGER NOT NULL DEFAULT 0 CHECK (cambio_cebo IN (0, 1)),
         cambio_piso  INTEGER NOT NULL DEFAULT 0 CHECK (cambio_piso IN (0, 1)),
         foto         TEXT
+    """,
+    "referencias_ia": """
+        especie_id  TEXT NOT NULL,   -- id de la especie (catálogo de identificación)
+        grupo       TEXT NOT NULL CHECK (grupo IN ('enfermedad', 'plaga', 'maleza')),
+        foto        TEXT,            -- ruta local de la foto confirmada
+        vector      BLOB NOT NULL,   -- embedding MobileNet (float16)
+        modelo      TEXT NOT NULL,   -- versión del extractor que generó el vector
+        origen      TEXT NOT NULL DEFAULT 'usuario'
     """,
     "aplicaciones": """
         predio_id           TEXT NOT NULL REFERENCES predios(id),

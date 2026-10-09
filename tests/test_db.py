@@ -116,3 +116,20 @@ def test_reabrir_archivo_conserva_datos(tmp_path):
     b2 = BaseLocal(ruta)
     assert b2.obtener("predios", pid)["nombre"] == "El Amanecer"
     b2.cerrar()
+
+
+def test_migra_una_base_de_la_version_1(tmp_path):
+    """Un teléfono con la base de la etapa 1 recibe la tabla nueva sin perder datos."""
+    ruta = str(tmp_path / "v1.sqlite3")
+    b = BaseLocal(ruta)
+    pid = b.insertar("predios", {"nombre": "El Amanecer"})
+    b.con.execute("DROP TABLE referencias_ia")
+    b.con.execute("PRAGMA user_version = 1")
+    b.con.commit()
+    b.cerrar()
+    b2 = BaseLocal(ruta)
+    assert b2.obtener("predios", pid)["nombre"] == "El Amanecer"
+    assert b2.con.execute("PRAGMA user_version").fetchone()[0] == VERSION_ESQUEMA
+    b2.insertar("referencias_ia", {"especie_id": "x", "grupo": "maleza", "vector": b"\x00\x00",
+                                   "modelo": "m"})
+    b2.cerrar()

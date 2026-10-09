@@ -8,3 +8,8 @@ DATOS = RAIZ / "datos"
 CATALOGO = DATOS / "catalogo-frambuesa-v1.json"
 SECTORES = DATOS / "sectores-el-amanecer.json"
 MODELO_MOBILENET = RAIZ / "assets" / "modelos" / "mobilenet_v3_small.npz"
+
+# Identificación (generados desde el PDF del libro de malezas; ver README)
+ESPECIES_MALEZAS = DATOS / "especies-malezas.json"
+REFERENCIAS_MALEZAS = DATOS / "referencias-malezas.npz"
+FOTOS_ESPECIES = RAIZ / "assets" / "especies"
