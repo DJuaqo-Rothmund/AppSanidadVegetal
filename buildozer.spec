@@ -10,7 +10,7 @@ package.name = sanidad
 package.domain = cl.elamanecer
 
 source.dir = .
-source.include_exts = py,png,jpg,kv,atlas,json
+source.include_exts = py,png,jpg,kv,atlas,json,npz
 source.exclude_dirs = tests, bin, docs, .github, .buildozer, venv, .venv, __pycache__
 source.exclude_patterns = firebase_config.example.json, requirements*.txt, README.md, SPEC.md
 
@@ -22,7 +22,7 @@ version.filename = %(source.dir)s/sanidad/__init__.py
 # receta p4a (base local y HTTPS). requests usa chardet 5.2.0 (Python puro): las
 # versiones 7.x y charset-normalizer traen partes compiladas para computador (x86_64)
 # que no cargan en el teléfono.
-requirements = python3,kivy==2.3.1,kivymd==1.2.0,kivy_garden.mapview==1.0.6,plyer,pillow,requests,urllib3,chardet==5.2.0,idna,certifi,sqlite3,openssl,pyjnius,android
+requirements = python3,kivy==2.3.1,kivymd==1.2.0,kivy_garden.mapview==1.0.6,plyer,pillow,numpy,requests,urllib3,chardet==5.2.0,idna,certifi,sqlite3,openssl,pyjnius,android
 
 icon.filename = %(source.dir)s/assets/icono.png
 presplash.filename = %(source.dir)s/assets/presplash.png

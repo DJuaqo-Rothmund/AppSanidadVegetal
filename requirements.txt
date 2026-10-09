@@ -4,5 +4,6 @@ kivymd==1.2.0
 requests
 certifi
 pillow
+numpy
 kivy_garden.mapview==1.0.6
 plyer
