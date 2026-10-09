@@ -39,6 +39,13 @@
                     text_color: C["texto"]
 
             MDIconButton:
+                icon: "leaf-circle-outline"
+                theme_icon_color: "Custom"
+                icon_color: C["accion"]
+                pos_hint: {"center_y": .5}
+                on_release: app.ir_a("identificar")
+
+            MDIconButton:
                 icon: "map-outline" if root.satelital else "satellite-variant"
                 theme_icon_color: "Custom"
                 icon_color: C["texto"]

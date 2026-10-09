@@ -19,10 +19,13 @@ from ..db import BaseLocal
 from ..firebase import ClienteAuth, ClienteFirestore
 from ..geo import cargar_sectores, teselas, ubicar
 from ..gps import GPS
+from ..ia.servicio import CatalogoEspecies, ServicioIdentificacion
+from ..medios import crear_medios
 from ..sesion import GestorSesion
 from . import tema
 from .mapa_esquematico import MapaEsquematico  # noqa: F401  (registro para el .kv)
 from .mapa_satelital import MapaSatelital  # noqa: F401  (registro para el .kv)
+from .pantallas.identificar import PantallaIdentificar
 from .pantallas.login import PantallaLogin
 from .pantallas.mapa import PantallaMapa
 
@@ -56,6 +59,7 @@ class SanidadApp(MDApp):
         self.pantallas = MDScreenManager()
         self.pantallas.add_widget(PantallaLogin(name="login"))
         self.pantallas.add_widget(PantallaMapa(name="mapa"))
+        self.pantallas.add_widget(PantallaIdentificar(name="identificar"))
         self.pantallas.current = "mapa" if self.sesion and self.sesion.activa else "login"
         return self.pantallas
 
@@ -71,6 +75,13 @@ class SanidadApp(MDApp):
         self.carpeta_mapa = carpeta_mapa
         self.teselas = teselas.AlmacenTeselas(os.path.join(carpeta_mapa, "esri_world_imagery.mbtiles"))
         self.cliente_mapa = teselas.ClienteTeselas(tiempo_espera_s=6, reintentos=0)
+
+        # Identificación por foto (IA local): catálogo del libro + organismos del monitoreo
+        self.especies = CatalogoEspecies.desde_archivos(rutas.ESPECIES_MALEZAS, self.catalogo)
+        self.identificacion = ServicioIdentificacion(
+            self.base, self.especies, rutas.MODELO_MOBILENET, rutas.REFERENCIAS_MALEZAS,
+            carpeta_fotos=os.path.join(self.user_data_dir, "referencias"))
+        self.medios = crear_medios(os.path.join(self.user_data_dir, "tmp"))
 
         self.gps_estado = EstadoGPS()
         self.gps = GPS(self._al_recibir_gps, lambda e: setattr(self.gps_estado, "estado", e))
@@ -93,7 +104,7 @@ class SanidadApp(MDApp):
             from android.permissions import Permission, request_permissions
             request_permissions([
                 Permission.ACCESS_FINE_LOCATION, Permission.ACCESS_COARSE_LOCATION,
-                Permission.CAMERA,
+                Permission.CAMERA, Permission.WRITE_EXTERNAL_STORAGE,  # esta última: solo Android 8-9
             ], self._permisos)
         else:
             self.gps.iniciar()

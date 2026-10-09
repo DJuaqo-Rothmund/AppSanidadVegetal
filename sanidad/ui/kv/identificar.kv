@@ -1,0 +1,223 @@
+#:import C sanidad.ui.tema.COLOR
+
+<BotonGrupo@MDFlatButton>:
+    grupo: ""
+    activo: False
+    md_bg_color: C["primario"] if self.activo else (1, 1, 1, 1)
+    theme_text_color: "Custom"
+    text_color: (1, 1, 1, 1) if self.activo else C["texto"]
+    line_color: C["borde_suave"]
+    rounded_button: True
+
+<TarjetaSugerencia>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: dp(112)
+    padding: dp(8)
+    spacing: dp(10)
+    radius: [dp(14)]
+    md_bg_color: C["superficie"]
+    line_color: C["borde_suave"]
+    elevation: 0
+
+    FitImage:
+        source: root.foto or "assets/icono.png"
+        size_hint: None, 1
+        width: dp(92)
+        radius: [dp(10)]
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: dp(2)
+
+        MDLabel:
+            text: root.nombre
+            font_style: "Subtitle1"
+            bold: True
+            shorten: True
+            theme_text_color: "Custom"
+            text_color: C["texto"]
+        MDLabel:
+            text: "[i]" + root.cientifico + "[/i]"
+            markup: True
+            font_style: "Caption"
+            shorten: True
+            theme_text_color: "Custom"
+            text_color: C["texto_2"]
+        MDLabel:
+            text: root.detalle
+            font_style: "Caption"
+            shorten: True
+            theme_text_color: "Custom"
+            text_color: C["texto_suave"]
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(30)
+            spacing: dp(6)
+            MDProgressBar:
+                value: root.confianza * 100
+                color: C["accion"]
+                pos_hint: {"center_y": .5}
+            MDLabel:
+                text: f"{root.confianza * 100:.0f} %"
+                font_style: "Caption"
+                bold: True
+                size_hint_x: None
+                width: dp(40)
+                theme_text_color: "Custom"
+                text_color: C["accion"]
+            MDIconButton:
+                icon: "information-outline"
+                size_hint: None, None
+                size: dp(30), dp(30)
+                on_release: app.pantallas.get_screen("identificar").ver_ficha(root.especie_id)
+            MDRaisedButton:
+                text: "ES ESTA"
+                md_bg_color: C["accion"]
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                elevation: 0
+                size_hint: None, None
+                height: dp(30)
+                font_size: "12sp"
+                on_release: app.pantallas.get_screen("identificar").confirmar(root.especie_id)
+
+<PantallaIdentificar>:
+    md_bg_color: C["fondo"]
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(72)
+            padding: dp(6), dp(8), dp(12), dp(4)
+            spacing: dp(4)
+
+            MDIconButton:
+                icon: "arrow-left"
+                pos_hint: {"center_y": .5}
+                on_release: root.volver()
+
+            MDBoxLayout:
+                orientation: "vertical"
+                MDLabel:
+                    text: "IDENTIFICAR · IA DEL PREDIO"
+                    font_style: "Overline"
+                    bold: True
+                    theme_text_color: "Custom"
+                    text_color: C["hoja"]
+                MDLabel:
+                    text: "¿Qué especie es?"
+                    font_style: "H5"
+                    bold: True
+                    theme_text_color: "Custom"
+                    text_color: C["texto"]
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(44)
+            padding: dp(12), 0
+            spacing: dp(8)
+            BotonGrupo:
+                text: "Malezas"
+                activo: root.grupo == "maleza"
+                on_release: root.elegir_grupo("maleza")
+            BotonGrupo:
+                text: "Enfermedades"
+                activo: root.grupo == "enfermedad"
+                on_release: root.elegir_grupo("enfermedad")
+            BotonGrupo:
+                text: "Plagas"
+                activo: root.grupo == "plaga"
+                on_release: root.elegir_grupo("plaga")
+
+        ScrollView:
+            do_scroll_x: False
+
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: dp(12)
+                spacing: dp(10)
+
+                MDCard:
+                    size_hint_y: None
+                    height: dp(220)
+                    radius: [dp(16)]
+                    md_bg_color: C["mapa_fondo"]
+                    elevation: 0
+
+                    FloatLayout:
+                        FitImage:
+                            source: root.foto
+                            opacity: 1 if root.foto else 0
+                            pos: self.parent.pos
+                            size: self.parent.size
+                            radius: [dp(16)]
+                        MDIcon:
+                            icon: "leaf"
+                            font_size: "56sp"
+                            halign: "center"
+                            theme_text_color: "Custom"
+                            text_color: C["hoja"]
+                            opacity: 0 if root.foto else .6
+                            pos_hint: {"center_x": .5, "center_y": .55}
+                        MDSpinner:
+                            size_hint: None, None
+                            size: dp(40), dp(40)
+                            pos_hint: {"center_x": .5, "center_y": .5}
+                            color: C["accion"]
+                            active: root.ocupado
+                            opacity: 1 if root.ocupado else 0
+
+                MDBoxLayout:
+                    size_hint_y: None
+                    height: dp(46)
+                    spacing: dp(10)
+                    MDRaisedButton:
+                        text: "TOMAR FOTO"
+                        md_bg_color: C["accion"]
+                        theme_text_color: "Custom"
+                        text_color: 1, 1, 1, 1
+                        elevation: 0
+                        size_hint_x: .5
+                        disabled: root.ocupado
+                        on_release: root.tomar_foto()
+                    MDRaisedButton:
+                        text: "GALERÍA"
+                        md_bg_color: C["primario"]
+                        theme_text_color: "Custom"
+                        text_color: 1, 1, 1, 1
+                        elevation: 0
+                        size_hint_x: .5
+                        disabled: root.ocupado
+                        on_release: root.elegir_de_galeria()
+
+                MDLabel:
+                    text: root.estado
+                    font_style: "Body2"
+                    adaptive_height: True
+                    theme_text_color: "Custom"
+                    text_color: C["texto_2"]
+
+                MDBoxLayout:
+                    id: resultados
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: dp(8)
+
+                MDFlatButton:
+                    text: "OTRA ESPECIE…"
+                    theme_text_color: "Custom"
+                    text_color: C["accion"]
+                    disabled: root.ocupado
+                    on_release: root.otra_especie()
+
+                MDLabel:
+                    text: root.resumen
+                    font_style: "Caption"
+                    adaptive_height: True
+                    theme_text_color: "Custom"
+                    text_color: C["texto_suave"]

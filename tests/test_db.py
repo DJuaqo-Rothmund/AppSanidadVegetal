@@ -133,3 +133,23 @@ def test_migra_una_base_de_la_version_1(tmp_path):
     b2.insertar("referencias_ia", {"especie_id": "x", "grupo": "maleza", "vector": b"\x00\x00",
                                    "modelo": "m"})
     b2.cerrar()
+
+
+def test_base_usable_desde_otros_hilos(base, predio_id):
+    import threading
+    errores = []
+
+    def trabajo(n):
+        try:
+            for _ in range(20):
+                base.insertar("puntos", {"predio_id": predio_id, "tipo": "fijo", "lat": n, "lng": n})
+                base.listar("puntos")
+        except Exception as e:  # noqa: BLE001
+            errores.append(e)
+
+    hilos = [threading.Thread(target=trabajo, args=(i,)) for i in range(4)]
+    for h in hilos:
+        h.start()
+    for h in hilos:
+        h.join()
+    assert errores == [] and len(base.listar("puntos")) == 80

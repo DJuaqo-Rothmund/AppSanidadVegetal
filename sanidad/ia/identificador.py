@@ -16,6 +16,7 @@ from .mobilenet import TAM_ENTRADA
 
 MODELO = "mobilenet_v3_small_imagenet_f16"
 TEMPERATURA = 0.04  # más baja = confianza más concentrada en la mejor especie
+VECTORES_POR_FOTO = 3  # original, espejo y recorte cerrado (vectores_de_foto)
 
 
 def preparar_imagen(ruta_o_imagen, recorte=0.9, espejo=False):
@@ -51,7 +52,7 @@ class Sugerencia:
     especie_id: str
     confianza: float     # 0..1, repartida entre las especies candidatas
     similitud: float     # coseno con la referencia más parecida
-    referencias: int     # cuántas referencias tiene la especie
+    referencias: int     # cuántas fotos de referencia tiene la especie
 
 
 class Identificador:
@@ -94,7 +95,8 @@ class Identificador:
             s = np.sort(sims[self.especies == especie])[::-1]
             s = s[np.isfinite(s)]
             if len(s):
-                puntajes[especie] = (float(s[:vecinos].mean()), float(s[0]), int(len(s)))
+                fotos = max(1, -(-len(s) // VECTORES_POR_FOTO))
+                puntajes[especie] = (float(s[:vecinos].mean()), float(s[0]), fotos)
         if not puntajes:
             return []
         nombres = list(puntajes)

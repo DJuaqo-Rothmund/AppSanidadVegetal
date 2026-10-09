@@ -32,7 +32,7 @@ orientation = portrait
 fullscreen = 0
 
 # Internet (Firebase, clima), ubicación (GPS) y cámara (fotos)
-android.permissions = INTERNET, ACCESS_NETWORK_STATE, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, CAMERA
+android.permissions = INTERNET, ACCESS_NETWORK_STATE, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, CAMERA, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=28)
 
 # Android 8 (API 26) o superior, según SPEC.md
 android.api = 34
